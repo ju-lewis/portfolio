@@ -1,0 +1,8 @@
+
+function openContactModal() {
+	
+}
+
+function closeContactModal() {
+	
+}

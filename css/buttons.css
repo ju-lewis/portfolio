@@ -1,0 +1,21 @@
+#contact-button {
+	color: white;
+	position: absolute;
+	right: 0.8rem;
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	font-weight: 500;
+
+	border-radius: 6px;
+	padding: 0.8rem;
+
+	font-size: 1.3rem;
+	font-family: "Montserrat";
+	transition: ease 0.3s;
+}
+
+#contact-button:hover {
+	background-color: #FFFFFF34;
+	border-radius: 16px;
+}

@@ -1,0 +1,66 @@
+
+/* Definitions */
+:root {
+	--main-accent: #3AAFA9;
+	--secondary-accent: #2B7A78;
+	--dark: #17252A;
+	--light-main: #DEF2F1;
+	--text-dark: #111111;
+}
+
+
+body {
+	margin: 0px;
+}
+
+html {
+	background-color: var(--light-main);
+}
+
+.banner {
+	background-color: var(--main-accent);
+	font-family: "Montserrat" !important;
+	padding: 1rem;
+}
+.banner h1 {
+	font-weight: 800;
+	font-size: 4rem;
+	text-align: center;
+	color: white;
+	margin-bottom: 0;
+}
+.banner h2 {
+	text-align: center;
+	font-size: 2rem;
+	color: var(--text-dark);
+	margin-top: 1rem;
+}
+.banner ul {
+	list-style: none;
+	display: flex;
+	font-size: 1.2rem;
+	justify-content: center; 
+}
+.banner li {
+	padding-top: 1rem;
+	text-align: center;
+	color: var(--text-dark);
+	cursor: pointer;
+
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+.banner li:hover {
+	text-decoration: underline;
+}
+
+
+
+
+/* Mobile Styles */
+@media screen and (max-width: 700px) {
+	.banner ul {
+		display: none;
+	}
+}
+
