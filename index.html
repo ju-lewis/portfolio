@@ -6,16 +6,30 @@
 		<title>Julian Lewis - Portfolio</title>
 		<link href="css/main.css" rel="stylesheet">
 		<link href="css/buttons.css" rel="stylesheet">
+		<link href="css/modal.css" rel="stylesheet">
 
 		<!-- Font Imports -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Reddit+Mono:wght@200..900&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Reddit+Mono:wght@200..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 		
 
 	</head>
 
 	<body>
+
+		<div id="outer-modal">
+			<div id="modal">
+				<h1>Contact</h1>
+				
+				<ul>
+					<li><strong>Email: </strong> julianlewis2023@gmail.com</li>
+					<li><strong>Phone: </strong> +61 484626271</li>
+				</ul>
+
+			</div>
+		</div>
+
 		<!-- Banner -->
 		<div class="banner">
 			<!-- Contact button??? -->
@@ -23,30 +37,67 @@
 
 			<h1>Julian Lewis</h1>
 			<h2>Computing and Software Systems student at Unimelb</h2>
-			<ul><li>Full Stack Development</li>   <li>Embedded Systems</li>   <li>Machine Learning</li></ul>
+			<ul>
+				<li onclick="scrollToWeb()">Full Stack Development</li> 
+				<li onclick="scrollToED()">Embedded Systems</li> 
+				<li onclick="scrollToML()">Machine Learning</li>
+			</ul>
 		</div>
 		
 		<!-- About/Experience section -->
 		<div class="section">
-			<h1>About me</h1>
-			<p></p>
+			<h1><span class="section-numbering">01. </span>About me</h1>
+			
+			<p class="content-paragraph">
+				I'm currently in my second year of studying computer science at the University of Melbourne, with the goal of continuing to a postgraduate research degree specialising in artificial intelligence.
+			</p>
+
+			<!-- Proficiency Section -->
+			<h2>Programming Experience:</h2>
+			<div id="proficiency-table">
+				<ul>
+					<li><strong>Proficient</strong></li>
+					<hr />
+					<li>Python</li>
+					<li>Rust</li>
+					<li>C</li>
+					<li>Javascript</li>
+					<li>MySQL + SQLite</li>
+				</ul>
+
+				<ul>
+					<li><strong>Somewhat Proficient</strong></li>
+					<hr />
+					<li>Java</li>
+					<li>ReactJS</li>
+				</ul>
+			</div>
 		</div>
 
 		<!-- Web Dev Projects -->
-		<div class="section">
-			<h1>Web Development Projects</h1>
+		<div class="section" id="web-dev">
+			<h1><span class="section-numbering">02. </span>Web development projects</h1>
 		</div>
 
 		<!-- Machine Learning Projects -->
-		<div class="section">
-			<h1>Machine Learning Projects</h1>
+		<div class="section" id="ml">
+			<h1><span class="section-numbering">03. </span>Machine learning projects</h1>
 		</div>
 
 		<!-- Embedded Projects -->
-		<div class="section">
-			<h1>Embedded Development Projects</h1>
+		<div class="section" id="embedded">
+			<h1><span class="section-numbering">04. </span>Embedded development projects</h1>
 		</div>
 
 	</body>
 
+	<footer>
+		<span>Copyright (©) 2024 Julian Lewis.</span>
+
+		<img id="github-logo" src="./imgs/github-mark-white.svg" alt="Github Logo" onclick="window.location.href='https://github.com/ju-lewis'"/>
+		<span id="github-text"  onclick="window.location.href='https://github.com/ju-lewis'"> GitHub</span>
+
+	</footer>
+
+	<script src="main.js"></script>
 </html>
