@@ -54,13 +54,27 @@ html {
 	text-decoration: underline;
 }
 
+.section h1 {
+	font-family: "Montserrat";
+	text-align: center;
+}
 
-
+.section {
+	font-family: "Reddit Mono";
+	color: var(--text-dark);
+	padding: 2rem;
+	margin: auto;
+	width: 80vw;
+}
 
 /* Mobile Styles */
 @media screen and (max-width: 700px) {
 	.banner ul {
 		display: none;
+	}
+
+	.section {
+		width: 100vw;
 	}
 }
 
