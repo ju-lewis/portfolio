@@ -2,12 +2,22 @@
 const modal = document.getElementById("outer-modal");
 
 function openContactModal() {
-	modal.style.display = "block";
+	//modal.style.display = "block";
+	modal.style.zIndex = "10";
+
+	setTimeout(() => {
+		modal.style.opacity = "1";
+	}, 100);
 }
 
 modal.addEventListener("click", (e) => {
 	if(e.target == modal) {
-		modal.style.display = "none";
+		//modal.style.display = "none";
+		modal.style.opacity = "0";
+
+		setTimeout(() => {
+			modal.style.zIndex = "-50";
+		}, 300);
 	}
 });
 

@@ -11,6 +11,7 @@
 
 body {
 	margin: 0px;
+	background-color: var(--light-main);
 }
 
 html {
@@ -125,3 +126,18 @@ footer img {
 	}
 }
 
+
+
+
+/* Game stuff */
+#asteroid-player {
+	position: absolute;
+}
+.bullet {
+	position: absolute;
+	color: red;
+}
+.asteroid {
+	position: absolute;
+	font-size: 8rem;
+}
