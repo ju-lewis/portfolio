@@ -132,6 +132,7 @@ class Player {
 	movingBackward = false;
 
 	bullets = [];
+	health = 100;
 
 
 	constructor() {
@@ -339,9 +340,11 @@ var gameClock = null;
 document.getElementById("asteroids-toggle").addEventListener("click", () => {
 	if(!game.isRunning) {
 		game.isRunning = true;
+		player.elem.style.display = "block";
 		gameClock = setInterval(game.update, 33); 
 	} else {
 		game.isRunning = false;
+		player.elem.style.display = "none";
 		clearInterval(gameClock);
 	}
 });
