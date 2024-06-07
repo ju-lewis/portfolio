@@ -9,6 +9,16 @@ function degToRad(deg) {
 function randBelow(max) {
 	return Math.floor(Math.random() * max);
 }
+function isIntersecting(elem1, elem2) {
+	if(typeof elem1 == "undefined" || typeof elem2 == "undefined") return false;
+
+	const pBounds = elem1.getBoundingClientRect();
+	const aBounds = elem2.getBoundingClientRect();
+
+	return pBounds.top > aBounds.top && pBounds.bottom < aBounds.bottom
+		&& pBounds.left > aBounds.left && pBounds.right < aBounds.right;
+}
+
 
 class Asteroid {
 	
@@ -58,6 +68,27 @@ class Asteroid {
 	update() {
 		this.pos[0] += -Asteroid.SPEED * Math.sin(degToRad(this.dir) + Math.PI / 2.0);
 		this.pos[1] += Asteroid.SPEED * Math.cos(degToRad(this.dir) + Math.PI / 2.0);
+
+		// Check for collisions with player (end game if true)
+		if(isIntersecting(player.elem, this.elem)) {
+			// Clear all bullets
+			player.bullets.forEach((b) => {
+				b.elem.remove();
+			});
+			player.bullets = [];
+			// Clear all asteroids
+			asteroids.forEach((a) => {
+				a.elem.remove();
+			});	
+			asteroids = [];
+
+			// Reset player
+			player = new Player();
+
+			toggleGame();
+
+			return;
+		}
 	}
 
 	draw() {
@@ -91,6 +122,16 @@ class Bullet {
 	}
 
 	update() {
+		// Check if bullet hit asteroid (destroy if so)
+		asteroids.forEach((a) => {
+			const intersecting = isIntersecting(this.elem, a.elem);
+			if(intersecting) {
+				a.elem.remove();
+				this.elem.remove();
+			}
+		});
+
+
 		this.pos[0] += -Bullet.SPEED * Math.cos(degToRad(this.dir) + Math.PI / 2.0);
 		this.pos[1] += -Bullet.SPEED * Math.sin(degToRad(this.dir) + Math.PI / 2.0);
 	}
@@ -132,8 +173,10 @@ class Player {
 	movingBackward = false;
 
 	bullets = [];
-	health = 100;
-
+	
+	static FIRE_DELAY = 5;
+	lastFired = 0;
+	
 
 	constructor() {
 		this.elem = document.getElementById("asteroid-player");
@@ -161,7 +204,10 @@ class Player {
 	}
 
 	shoot() {
-		this.bullets.push(new Bullet(this.pos[0], this.pos[1], this.rPos));
+		if(this.lastFired >= Player.FIRE_DELAY) {
+			this.bullets.push(new Bullet(this.pos[0], this.pos[1], this.rPos));
+			this.lastFired = 0;
+		}
 	}
 
 	draw() {
@@ -178,6 +224,9 @@ class Player {
 	}
 
 	update() {
+		if(this.lastFired < Player.FIRE_DELAY + 1) {
+			this.lastFired += 1;
+		}
 
 		// Update position
 		this.pos[0] += this.vel[0];
@@ -337,7 +386,9 @@ var player = new Player();
 var asteroids = [];
 
 var gameClock = null;
-document.getElementById("asteroids-toggle").addEventListener("click", () => {
+document.getElementById("asteroids-toggle").addEventListener("click", toggleGame);
+
+function toggleGame() {
 	if(!game.isRunning) {
 		game.isRunning = true;
 		player.elem.style.display = "block";
@@ -347,5 +398,4 @@ document.getElementById("asteroids-toggle").addEventListener("click", () => {
 		player.elem.style.display = "none";
 		clearInterval(gameClock);
 	}
-});
-
+}
