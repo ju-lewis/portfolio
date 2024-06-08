@@ -58,6 +58,7 @@ html {
 .section h1 {
 	font-family: "Montserrat";
 	font-size: 3rem;
+	margin-bottom: 2rem;
 }
 
 .section {
@@ -114,6 +115,24 @@ footer img {
 	padding-left: 4rem;
 }
 
+.section img {
+	width: 40%;
+	box-shadow: 5px 5px 10px 10px #00000045;
+	margin-left: 4rem;
+}
+
+.description-list {
+	padding-left: 1rem;
+}
+
+.description-list span {
+	font-weight: bold;
+}
+
+.img-row {
+	display: flex;
+	align-items: center;
+}
 
 
 /* Mobile Styles */
@@ -134,8 +153,6 @@ footer img {
 	.section-numbering {
 		display: none;
 	}
-
-	
 }
 
 
@@ -154,3 +171,46 @@ footer img {
 	position: absolute;
 	font-size: 8rem;
 }
+
+/* Machine learning stuff */
+
+#canvas {
+	background-color: white;
+	margin-right: 1rem;
+}
+
+#nn-table, #nn-table-labels {
+	display: flex;
+}
+
+.nn-out {
+	height: 2rem;
+	min-width: 2rem;
+	width: fit-content;
+	text-align: center;
+	padding: 0.2rem;
+}
+
+#nn-table .nn-out {
+	border: 1px solid black;
+}
+
+#nn-table-labels .nn-out {
+	border: 1px solid transparent;
+}
+
+.nn-container {
+	display: flex;
+	align-items: center;
+	margin-left: 4rem;
+}
+
+#control-buttons {
+	display: flex;
+	margin-left: 4rem;
+}
+
+#control-buttons button {
+	margin: 0.5rem;
+}
+

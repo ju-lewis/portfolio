@@ -87,18 +87,93 @@
 			<!-- Startbase -->
 			<h2>Startbase</h2>
 			<div>
-				<p>
+				<p class="content-paragraph" style="margin-bottom: 2rem; margin-top: 1rem;">
 					Startbase Management is a cloud-based business insight and customer relation management system. 
 					Its core principle is integrating booking/contact management with marketing analytics to provide 
 					an all-in-one platform for running the online aspects of a business.
 				</p>
-			</div>
+				
+				<div class="img-row">
+					<img src="imgs/startbase1.png" />
+					<img src="imgs/startbase2.png" />
+				</div>
 
+				<div class="content-paragraph">
+					<h3>Project Details</h3>
+					<ul class="description-list">
+						<li>Duration: <span>May 2023 - Ongoing</span></li>
+						<li>Languages used: <span>Python, ReactJS, MongoDB, Rust (Soon)</span></li>
+						<li>Project Scope: <span>All backend endpoints and APIs were written by me, as well as the entire app frontend.</span></li>
+					</ul>
+					<a href="https://startbase.site" target="">See Startbase here</a>
+				</div>
+
+			</div>
 		</div>
 
 		<!-- Machine Learning Projects -->
 		<div class="section" id="ml">
 			<h1><span class="section-numbering">03. </span>Machine learning projects</h1>
+
+
+			<h2>Handwritten Digit Classifier:</h2>
+			<p class="content-paragraph" style="margin-bottom: 2rem;">
+				This is a simple no dependency pure Javascript digit classifier I wrote as a small two day side project.
+				The neural network is a simple feed-forward network with no hidden layers and a softmax output. For training 
+				it uses cross-entropy loss and simple gradient descent, with Xavier initialised weights.
+				<br style="margin-bottom: 1rem;">
+				The maximum accuracy isn't fantastic as the model is incredibly simplistic, but it was a fun experiment to program 
+				a browser-native neural network.
+				<br style="margin-bottom: 1rem;">
+				When you click train it requests the MNIST dataset from the server and begins training on all digits from 0 to 9. 
+				You can draw in the white canvas and press 'Predict' to interact with the model!
+			</p>
+			<div class="nn-container">
+				<canvas id="canvas" width="224" height="224"></canvas>
+
+				<!-- Output Table -->
+				<div style="margin-left: 1rem;">
+					<div id="nn-table">
+						<div class="nn-out"></div>
+						<div class="nn-out"></div>
+						<div class="nn-out"></div>
+						<div class="nn-out"></div>
+						<div class="nn-out"></div>
+						<div class="nn-out"></div>
+						<div class="nn-out"></div>
+						<div class="nn-out"></div>
+						<div class="nn-out"></div>
+						<div class="nn-out"></div>
+					</div>
+					<div id="nn-table-labels">
+						<div class="nn-out">0</div>
+						<div class="nn-out">1</div>
+						<div class="nn-out">2</div>
+						<div class="nn-out">3</div>
+						<div class="nn-out">4</div>
+						<div class="nn-out">5</div>
+						<div class="nn-out">6</div>
+						<div class="nn-out">7</div>
+						<div class="nn-out">8</div>
+						<div class="nn-out">9</div>
+					</div>
+
+					<!-- Model stats -->
+					<div>
+						<div>Target Epochs: <input type="number" value="50" id="epoch-input"></div>
+						<div>Epochs Trained: <span id="epoch-label">0</span></div>
+						<div>Loss: <span id="loss-label">-</span></div>
+					</div>
+				</div>
+
+			</div>
+
+			<div id="control-buttons">
+				<button onclick="clearCanvas()">Clear Canvas</button>
+				<button onclick="predictNum()">Predict</button>
+				<button onclick="globalTrain()">Train</button>
+			</div>
+
 		</div>
 
 		<!-- Embedded Projects -->
@@ -121,4 +196,6 @@
 
 	<script src="main.js"></script>
 	<script src="asteroids.js"></script>
+	<script src="ml.js"></script>
+	<script src="draw.js"></script>
 </html>

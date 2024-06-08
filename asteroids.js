@@ -311,7 +311,7 @@ window.addEventListener("keydown", (e) => {
 			game.newAsteroid();
 			break;
 		default:
-			console.log(keyPressed);
+			//console.log(keyPressed);
 			break;
 	}
 	
