@@ -52,8 +52,8 @@
 			<p class="content-paragraph" style="margin-bottom: 0px;">
 				I'm currently in my second year of studying computer science at the University of Melbourne, with the goal of continuing to a postgraduate research degree specialising in artificial intelligence.
 			</p>
-			<p class="content-paragraph">
-				I made this website to document some of my more notable projects.
+			<p class="content-paragraph" style="margin-bottom: 2rem;">
+				I made this website to document some of my more notable projects, which I will continuously update as I build more.
 			</p>
 
 			<!-- Proficiency Section -->
@@ -66,7 +66,7 @@
 						<li>Python</li>
 						<li>Rust</li>
 						<li>C</li>
-						<li>Javascript</li>
+						<li>JavaScript</li>
 						<li>MySQL + SQLite</li>
 					</ul>
 
@@ -75,6 +75,7 @@
 						<hr />
 						<li>Java</li>
 						<li>ReactJS</li>
+						<li>C#</li>
 					</ul>
 				</div>
 			</div>
@@ -92,6 +93,20 @@
 					Its core principle is integrating booking/contact management with marketing analytics to provide 
 					an all-in-one platform for running the online aspects of a business.
 				</p>
+				<p class="content-paragraph" style="margin-bottom: 2rem; margin-top: 1rem;">
+					What began as a small side project quickly developed into a promising business, attracting interest
+					from several businesses across Australia and the UK.
+					
+					<br>
+					<a style="text-decoration: underline; cursor: pointer; color: blue;" 
+					   onmousedown="
+						this.style.color = 'orange';
+					   "
+					   onmouseup="
+						openContactModal();
+						this.style.color = 'blue';
+					   ">Contact me for more information</a>
+				</p>
 				
 				<div class="img-row">
 					<img src="imgs/startbase1.png" />
@@ -102,7 +117,7 @@
 					<h3>Project Details</h3>
 					<ul class="description-list">
 						<li>Duration: <span>May 2023 - Ongoing</span></li>
-						<li>Languages used: <span>Python, ReactJS, MongoDB, Rust (Soon)</span></li>
+						<li>Languages used: <span>Python (Flask), ReactJS, MongoDB, TailwindCSS, Rust (Soon)</span></li>
 						<li>Project Scope: <span>All backend endpoints and APIs were written by me, as well as the entire app frontend.</span></li>
 					</ul>
 					<a href="https://startbase.site" target="">See Startbase here</a>
@@ -118,7 +133,7 @@
 
 			<h2>Handwritten Digit Classifier:</h2>
 			<p class="content-paragraph" style="margin-bottom: 2rem;">
-				This is a simple no dependency pure Javascript digit classifier I wrote as a small two day side project.
+				This is a simple no dependency pure JavaScript digit classifier I wrote as a small two day side project.
 				The neural network is a simple feed-forward network with no hidden layers and a softmax output. For training 
 				it uses cross-entropy loss and simple gradient descent, with Xavier initialised weights.
 				<br style="margin-bottom: 1rem;">
@@ -179,6 +194,58 @@
 		<!-- Embedded Projects -->
 		<div class="section" id="embedded">
 			<h1><span class="section-numbering">04. </span>Embedded development projects</h1>
+
+			<h2>Point-Track</h2>
+			<p class="content-paragraph" style="margin-bottom: 2rem;">
+				Point-Track is an ongoing software development and electrical engineering project I'm working on 
+				to automate the scoring and management of yacht time trial races.
+
+				The project involves two main parts: a microprocessor and GNSS receiver which are kept on a boat, and 
+				a web application to process and display results, managed by the yacht race organiser.
+
+			</p>
+
+			<h3 class="content-paragraph" style="margin-bottom: 0;">Goal:</h3>
+			<p class="content-paragraph" style="margin-bottom: 2rem; margin-top: 1rem;">
+				Create a small and affordable GNSS positioning unit that can record sub-metre accuracy position, velocity, and heading data 
+				that can be wirelessly transferred to a central server after a race. This positioning data needs to be compared against a pre-defined 
+				selection of points with corresponding 'arrival times' to determine the overall accuracy of the boat based on how close it was to the 
+				pre-defined course.
+				<ol class="ordered-list">
+					<li style="margin-bottom: 1rem; border-top: 1px solid #33333355; padding-top: 2rem;">
+						For the positioning unit on the boats, I elected to use an ESP-32 microcontroller for its native wireless capabilities and built-in SPIFFS file system 
+						support. This microcontroller was responsibile for driving both the user interface (comprised of 4 buttons and a 16x2 LCD display) and reading data from 
+						the GNSS receiver module (for which I chose a U-Blox ZED F9P for its raw output ability for post-processing kinematic correction,
+						enabling low-cost high-accuracy poositioning).
+					</li>
+					<li>
+						For the web application, I built the entire system with minimalism and simplicity of user interaction in mind so I utilised Rust for its speed 
+						and runtime safety guarantees, with my API design philosophy being entirely based on server rendered hypertext - doing away with an intermediate data representation 
+						like JSON. 
+					</li>
+				</ol>
+
+				<br>
+				<a style="text-decoration: underline; cursor: pointer; color: blue; margin-left: 4rem;" 
+				   onmousedown="
+					this.style.color = 'orange';
+				   "
+				   onmouseup="
+					openContactModal();
+					this.style.color = 'blue';
+				   ">Contact me for more information</a>
+			</p>
+			<div class="content-paragraph">
+				<h3>Project Details</h3>
+				<ul class="description-list">
+					<li>Duration: <span>January 2024 - Ongoing</span></li>
+					<li>Languages used: <span>Rust, C, SQLite, HTML, CSS, JavaScript</span></li>
+					<li>Other Skills Involved: <span>PCB Design (for high precision GNSS application), CAD for 3D Printing</span></li>
+					<li>Project Scope: <span>Entire web application stack was developed by me, as well as the embedded ESP-32 software.</span></li>
+				</ul>
+				(<span style="text-decoration: underline;">DOMAIN COMING SOON</span>)
+			</div>
+
 		</div>
 
 		<!-- Fun features -->

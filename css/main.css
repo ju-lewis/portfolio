@@ -111,6 +111,11 @@ footer img {
 	margin-bottom: 6rem;
 }
 
+.ordered-list {
+	padding-left: 4rem;
+	width: 60%;
+}
+
 .section h2, .section p {
 	padding-left: 4rem;
 }

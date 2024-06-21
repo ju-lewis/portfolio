@@ -1,3 +1,8 @@
+/*
+	Code written by Julian Lewis, 2024
+*/
+
+
 const ctx = document.getElementById("canvas").getContext("2d");
 const outputTable = document.getElementById("nn-table");
 const tableCells = outputTable.children;
