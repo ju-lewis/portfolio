@@ -19,3 +19,15 @@
 	background-color: #FFFFFF34;
 	border-radius: 16px;
 }
+
+.minor-button {
+	background-color: transparent;
+	color: white;
+	border: 1px solid white;
+	border-radius: 6px;
+	padding: 0.3rem;
+	cursor: pointer;
+}
+.minor-button:hover {
+	background-color: #FFFFFF34;
+}

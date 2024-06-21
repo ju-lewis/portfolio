@@ -58,7 +58,7 @@
 
 			<!-- Proficiency Section -->
 			<div>
-				<h2>Programming Experience:</h2>
+				<h2 id="experience-heading">Programming Experience:</h2>
 				<div id="proficiency-table">
 					<ul>
 						<li><strong>Proficient</strong></li>
@@ -86,7 +86,7 @@
 			<h1><span class="section-numbering">02. </span>Web development projects</h1>
 			
 			<!-- Startbase -->
-			<h2>Startbase</h2>
+			<h2>Startbase Management</h2>
 			<div>
 				<p class="content-paragraph" style="margin-bottom: 2rem; margin-top: 1rem;">
 					Startbase Management is a cloud-based business insight and customer relation management system. 
@@ -143,6 +143,9 @@
 				When you click train it requests the MNIST dataset from the server and begins training on all digits from 0 to 9. 
 				You can draw in the white canvas and press 'Predict' to interact with the model!
 			</p>
+
+			<!-- Mobile demo disable notice -->
+			<h3 id="demo-notice">The interactive neural network demo is only available on desktop.</h3>
 			<div class="nn-container">
 				<canvas id="canvas" width="224" height="224"></canvas>
 
@@ -205,7 +208,7 @@
 
 			</p>
 
-			<h3 class="content-paragraph" style="margin-bottom: 0;">Goal:</h3>
+			<h3 id="pt-goal" class="content-paragraph" style="margin-bottom: 0;">Goal:</h3>
 			<p class="content-paragraph" style="margin-bottom: 2rem; margin-top: 1rem;">
 				Create a small and affordable GNSS positioning unit that can record sub-metre accuracy position, velocity, and heading data 
 				that can be wirelessly transferred to a central server after a race. This positioning data needs to be compared against a pre-defined 
@@ -258,7 +261,7 @@
 
 		<img id="github-logo" src="./imgs/github-mark-white.svg" alt="Github Logo" onclick="window.location.href='https://github.com/ju-lewis'"/>
 		<span id="github-text"  onclick="window.location.href='https://github.com/ju-lewis'"> GitHub</span>
-		<button id="asteroids-toggle">Asteroids</button>
+		<button id="asteroids-toggle" class="minor-button">Asteroids</button>
 	</footer>
 
 	<script src="main.js"></script>

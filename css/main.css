@@ -92,6 +92,7 @@ footer img {
 
 #github-text {
 	cursor: pointer;
+	margin-right: 2rem;
 }
 
 #proficiency-table {
@@ -151,12 +152,62 @@ footer img {
 		padding: 0px;
 	}
 
+	.content-paragraph {
+		padding: 2rem !important;
+		width: calc(100% - 4rem);
+		margin-bottom: 1rem !important;
+		padding-top: 1rem !important;
+	}
+
 	.section h1 {
 		text-align: center;
 	}
 
+	.section h2 {
+		text-align: center;
+		padding-left: 0px !important;
+	}
+
+	#pt-goal {
+		margin-top: 0 !important;
+		padding-bottom: 0px !important;
+	}
+
 	.section-numbering {
 		display: none;
+	}
+
+	.nn-container, #control-buttons {
+		display: none !important;
+	}
+	
+	#demo-notice {
+		display: block !important;
+		padding: 1rem;
+	}
+
+	.img-row {
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	.img-row img {
+		width: 80%;
+		margin-left: 0px !important;
+		margin-bottom: 2rem;
+	}
+	#experience-heading {
+		padding-left: 0px !important;
+		text-align: center;
+	}
+	#proficiency-table {
+		justify-content: center;
+	}
+	#proficiency-table ul {
+		padding-left: 0px !important;
+		text-align: center;
+		margin-left: 1rem;
+		margin-right: 1rem;
 	}
 }
 
@@ -217,5 +268,9 @@ footer img {
 
 #control-buttons button {
 	margin: 0.5rem;
+}
+
+#demo-notice {
+	display: none;
 }
 
