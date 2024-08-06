@@ -35,6 +35,9 @@
 	font-size: 3rem;
 	padding-left: 3rem;
 }
+#modal h2 {
+	padding-left: 3rem;
+}
 
 #modal ul {
 	list-style: none;
