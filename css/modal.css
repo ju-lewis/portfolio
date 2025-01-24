@@ -11,12 +11,12 @@
 #modal {
 	font-family: "Montserrat";
 
-	position: fixed;
-	width: 80vw;
-	left: 10vw;
-	top: 8rem;
+	width: 40vw;
+    margin: auto;
+    transform: translateY(20vh);
+
 	padding: 2rem;
-	background-color: var(--dark);
+	background-color: var(--secondary-accent);
 	color: white;
 	border-radius: 1rem;
 	box-shadow: 5px 5px 20px 10px #00000084;
