@@ -276,6 +276,6 @@ function predictNum() {
 }
 
 
-
+// Create a model for an input of 28x28 pixels
 let model = new Model(28*28);
 
