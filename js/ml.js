@@ -232,7 +232,7 @@ async function getData() {
 	// Get raw array of MNIST data from server
 	let raw = new Array(10);
 	for(let i=0; i<10; i++) {
-		const data = await fetch(`digits/${i}.json`);
+		const data = await fetch(`/digits/${i}.json`);
 		const json = await data.json();
 		raw[i] = json.data;
 	}

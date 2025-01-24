@@ -1,0 +1,60 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+:root {
+	--main-accent: #3AAFA9;
+	--secondary-accent: #2B7A78;
+	--dark: #17252A;
+	--light-main: #DEF2F1;
+	--text-dark: #111111;
+    --text-light: #EEEEEE;
+
+    --link: #CCCCCC;
+    --link-hover: #AAAAAA;
+    --link-visited: #BE6EDF;
+}
+
+
+footer {
+    font-family: "Montserrat";
+    color: var(--text-light);
+    position: absolute;
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    bottom: 0;
+}
+
+
+footer #footer-content {
+    width: fit-content;
+    display: flex;
+    margin: auto;
+}
+
+.main-content {
+
+    /* All pages should use these default font settings */
+    font-family: "Nunito Sans";
+    color: var(--text-light);
+
+
+    /* Base formatting for page contents */
+    width: 40vw;
+    margin: auto;
+    padding: 1.5rem;
+    
+    border: 1px solid var(--text-light);
+    border-radius: 0.5rem;
+}
+
+
+a:link {
+    color: var(--link);
+}
+a:hover {
+    color: var(--link-hover);
+}
+a:visited {
+    color: var(--link-visited);
+}

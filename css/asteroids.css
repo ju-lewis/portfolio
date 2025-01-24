@@ -1,0 +1,13 @@
+
+#asteroid-player {
+	position: absolute;
+	display: none;
+}
+.bullet {
+	position: absolute;
+	color: red;
+}
+.asteroid {
+	position: absolute;
+	font-size: 8rem;
+}

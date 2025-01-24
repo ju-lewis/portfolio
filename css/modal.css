@@ -1,11 +1,3 @@
-/* Definitions */
-:root {
-	--main-accent: #3AAFA9;
-	--secondary-accent: #2B7A78;
-	--dark: #17252A;
-	--light-main: #DEF2F1;
-	--text-dark: #111111;
-}
 
 #outer-modal {
 	position: fixed;
@@ -42,7 +34,7 @@
 #modal ul {
 	list-style: none;
 	padding-left: 48px;
-	font-family: "Reddit Mono";
+	font-family: "Nunito Sans";
 }
 
 #modal li {

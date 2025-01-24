@@ -4,15 +4,22 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>ju.lewis</title>
+
+        <!-- Style imports -->
 		<link href="css/main.css" rel="stylesheet">
+        <link href="css/theme.css" rel="stylesheet">
 		<link href="css/buttons.css" rel="stylesheet">
 		<link href="css/modal.css" rel="stylesheet">
 
 		<!-- Font Imports -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Reddit+Mono:wght@200..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 		
+        <!-- Favicon Stuff -->
+        <link rel="apple-touch-icon" sizes="180x180" href="/imgs/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/imgs/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/imgs/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
 
 	</head>
 
@@ -21,254 +28,54 @@
 		<div id="outer-modal">
 			<div id="modal">
 				<h1>Contact</h1>
-				
 				<ul>
 					<li><strong>Email: </strong> julianlewis2023@gmail.com</li>
-					<li><strong>Phone: </strong> (+61) 484626271</li>
-					<li><strong>Located: </strong> Melbourne, Australia</li>
+					<li><strong>Currently in: </strong> Melbourne, Australia</li>
 				</ul>
-
-				<h2>Email me for my resume!</h2>
-
 			</div>
 		</div>
+
 
 		<!-- Banner -->
 		<div class="banner">
 			<!-- Contact button -->
-			<button id="contact-button" onclick="openContactModal()">Contact</button>
+			<button 
+                id="contact-button" 
+                onclick="openContactModal()"
+                onmousedown="this.style.backgroundColor = '#CCCCCC'"
+                onmouseup="this.style.backgroundColor = 'var(--text-light)'"
+            >
+                Contact
+            </button>
 
 			<h1>Julian Lewis</h1>
-			<h2>Computing and Software Systems student at Unimelb</h2>
-			<ul>
-				<li onclick="scrollToWeb()">Full Stack Development</li> 
-				<li onclick="scrollToED()">Embedded Systems</li> 
-				<li onclick="scrollToML()">Machine Learning</li>
-			</ul>
+			<h2>Software dev and motorsports electrical engineer</h2>
 		</div>
 		
-		<!-- About/Experience section -->
-		<div class="section">
-            <a href="/portfolio/test.html">Test</a>
-			<h1><span class="section-numbering">01. </span>About me</h1>
-			
-			<p class="content-paragraph" style="margin-bottom: 0px;">
-				I'm currently in my second year of studying computer science at the University of Melbourne, with the goal of continuing to a postgraduate research degree specialising in artificial intelligence.
-			</p>
-			<p class="content-paragraph" style="margin-bottom: 2rem;">
-				I made this website to document some of my more notable projects, which I will continuously update as I build more.
-			</p>
+        <!-- Main content -->
+        <div class="main-content">
+            <p>
+                Hey! Welcome to my site :)
+            </p>
+            <p>
+                This is a log of my projects and future plans
+            </p>
 
-			<!-- Proficiency Section -->
-			<div>
-				<h2 id="experience-heading">Programming Experience:</h2>
-				<div id="proficiency-table">
-					<ul>
-						<li><strong>Proficient</strong></li>
-						<hr />
-						<li>Python</li>
-						<li>Rust</li>
-						<li>C</li>
-						<li>JavaScript</li>
-						<li>MySQL + SQLite</li>
-					</ul>
-
-					<ul>
-						<li><strong>Somewhat Proficient</strong></li>
-						<hr />
-						<li>Java</li>
-						<li>ReactJS</li>
-						<li>C#</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-
-		<!-- Web Dev Projects -->
-		<div class="section" id="web-dev">
-			<h1><span class="section-numbering">02. </span>Web development projects</h1>
-			
-			<!-- Startbase -->
-			<h2>Startbase Management</h2>
-			<div>
-				<p class="content-paragraph" style="margin-bottom: 2rem; margin-top: 1rem;">
-					Startbase Management is a cloud-based business insight and customer relation management system. 
-					Its core principle is integrating booking/contact management with marketing analytics to provide 
-					an all-in-one platform for running the online aspects of a business.
-				</p>
-				<p class="content-paragraph" style="margin-bottom: 2rem; margin-top: 1rem;">
-					What began as a small side project quickly developed into a promising business, attracting interest
-					from several businesses across Australia and the UK.
-					
-					<br>
-					<a style="text-decoration: underline; cursor: pointer; color: blue;" 
-					   onmousedown="
-						this.style.color = 'orange';
-					   "
-					   onmouseup="
-						openContactModal();
-						this.style.color = 'blue';
-					   ">Contact me for more information</a>
-				</p>
-				
-				<div class="img-row">
-					<img src="imgs/startbase1.png" />
-					<img src="imgs/startbase2.png" />
-				</div>
-
-				<div class="content-paragraph">
-					<h3>Project Details</h3>
-					<ul class="description-list">
-						<li>Duration: <span>May 2023 - Ongoing</span></li>
-						<li>Languages used: <span>Python (Flask), ReactJS, MongoDB, TailwindCSS, Rust (Soon)</span></li>
-						<li>Project Scope: <span>All backend endpoints and APIs were written by me, as well as the entire app frontend.</span></li>
-					</ul>
-					<a href="https://startbase.site" target="">See Startbase here</a>
-				</div>
-
-			</div>
-		</div>
-
-		<!-- Machine Learning Projects -->
-		<div class="section" id="ml">
-			<h1><span class="section-numbering">03. </span>Machine learning projects</h1>
-
-
-			<h2>Handwritten Digit Classifier:</h2>
-			<p class="content-paragraph" style="margin-bottom: 2rem;">
-				This is a simple no dependency pure JavaScript digit classifier I wrote as a small two day side project.
-				The neural network is a simple feed-forward network with no hidden layers and a softmax output. For training 
-				it uses cross-entropy loss and simple gradient descent, with Xavier initialised weights.
-				<br style="margin-bottom: 1rem;">
-				The maximum accuracy isn't fantastic as the model is incredibly simplistic, but it was a fun experiment to program 
-				a browser-native neural network.
-				<br style="margin-bottom: 1rem;">
-				When you click train it requests the MNIST dataset from the server and begins training on all digits from 0 to 9. 
-				You can draw in the white canvas and press 'Predict' to interact with the model!
-			</p>
-
-			<!-- Mobile demo disable notice -->
-			<h3 id="demo-notice">The interactive neural network demo is only available on desktop.</h3>
-			<div class="nn-container">
-				<canvas id="canvas" width="224" height="224"></canvas>
-
-				<!-- Output Table -->
-				<div style="margin-left: 1rem;">
-					<div id="nn-table">
-						<div class="nn-out"></div>
-						<div class="nn-out"></div>
-						<div class="nn-out"></div>
-						<div class="nn-out"></div>
-						<div class="nn-out"></div>
-						<div class="nn-out"></div>
-						<div class="nn-out"></div>
-						<div class="nn-out"></div>
-						<div class="nn-out"></div>
-						<div class="nn-out"></div>
-					</div>
-					<div id="nn-table-labels">
-						<div class="nn-out">0</div>
-						<div class="nn-out">1</div>
-						<div class="nn-out">2</div>
-						<div class="nn-out">3</div>
-						<div class="nn-out">4</div>
-						<div class="nn-out">5</div>
-						<div class="nn-out">6</div>
-						<div class="nn-out">7</div>
-						<div class="nn-out">8</div>
-						<div class="nn-out">9</div>
-					</div>
-
-					<!-- Model stats -->
-					<div>
-						<div>Target Epochs: <input type="number" value="50" id="epoch-input"></div>
-						<div>Epochs Trained: <span id="epoch-label">0</span></div>
-						<div>Loss: <span id="loss-label">-</span></div>
-					</div>
-				</div>
-
-			</div>
-
-			<div id="control-buttons">
-				<button onclick="clearCanvas()">Clear Canvas</button>
-				<button onclick="predictNum()">Predict</button>
-				<button onclick="globalTrain()">Train</button>
-			</div>
-
-		</div>
-
-		<!-- Embedded Projects -->
-		<div class="section" id="embedded">
-			<h1><span class="section-numbering">04. </span>Embedded development projects</h1>
-
-			<h2>Point-Track</h2>
-			<p class="content-paragraph" style="margin-bottom: 2rem;">
-				Point-Track is an ongoing software development and electrical engineering project I'm working on 
-				to automate the scoring and management of yacht time trial races.
-
-				The project involves two main parts: a microprocessor and GNSS receiver which are kept on a boat, and 
-				a web application to process and display results, managed by the yacht race organiser.
-
-			</p>
-
-			<h3 id="pt-goal" class="content-paragraph" style="margin-bottom: 0;">Goal:</h3>
-			<p class="content-paragraph" style="margin-bottom: 2rem; margin-top: 1rem;">
-				Create a small and affordable GNSS positioning unit that can record sub-metre accuracy position, velocity, and heading data 
-				that can be wirelessly transferred to a central server after a race. This positioning data needs to be compared against a pre-defined 
-				selection of points with corresponding 'arrival times' to determine the overall accuracy of the boat based on how close it was to the 
-				pre-defined course.
-				<ol class="ordered-list">
-					<li style="margin-bottom: 1rem; border-top: 1px solid #33333355; padding-top: 2rem;">
-						For the positioning unit on the boats, I elected to use an ESP-32 microcontroller for its native wireless capabilities and built-in SPIFFS file system 
-						support. This microcontroller was responsibile for driving both the user interface (comprised of 4 buttons and a 16x2 LCD display) and reading data from 
-						the GNSS receiver module (for which I chose a U-Blox ZED F9P for its raw output ability for post-processing kinematic correction,
-						enabling low-cost high-accuracy poositioning).
-					</li>
-					<li>
-						For the web application, I built the entire system with minimalism and simplicity of user interaction in mind so I utilised Rust for its speed 
-						and runtime safety guarantees, with my API design philosophy being entirely based on server rendered hypertext - doing away with an intermediate data representation 
-						like JSON. 
-					</li>
-				</ol>
-
-				<br>
-				<a style="text-decoration: underline; cursor: pointer; color: blue; margin-left: 4rem;" 
-				   onmousedown="
-					this.style.color = 'orange';
-				   "
-				   onmouseup="
-					openContactModal();
-					this.style.color = 'blue';
-				   ">Contact me for more information</a>
-			</p>
-			<div class="content-paragraph">
-				<h3>Project Details</h3>
-				<ul class="description-list">
-					<li>Duration: <span>January 2024 - Ongoing</span></li>
-					<li>Languages used: <span>Rust, C, SQLite, HTML, CSS, JavaScript</span></li>
-					<li>Other Skills Involved: <span>PCB Design (for high precision GNSS application), CAD for 3D Printing</span></li>
-					<li>Project Scope: <span>Entire web application stack was developed by me, as well as the embedded ESP-32 software.</span></li>
-				</ul>
-				(<span style="text-decoration: underline;">DOMAIN COMING SOON</span>)
-			</div>
-
-		</div>
-
-		<!-- Fun features -->
-		<div id="asteroid-player"><h1 style="color: red;">🛸</h1></div>
-
+            <h2>Contents</h2>
+            <ul>
+                <li><a href="/pages/experiments.html">Small web-based experiment projects</a></li>
+                <li><a href="/pages/projects.html">Larger software projects</a></li>
+                <li><a href="/pages/eng.html">Embedded dev and electrical engineering</a></li>
+                <li><a href="/pages/plans.html">Plans for the future</a></li>
+            </ul>
+        </div>
 	</body>
 
 	<footer>
-		<span>©2025 Julian Lewis.</span>
-
-		<img id="github-logo" src="./imgs/github-mark-white.svg" alt="Github Logo" onclick="window.location.href='https://github.com/ju-lewis'"/>
-		<span id="github-text"  onclick="window.location.href='https://github.com/ju-lewis'"> GitHub</span>
-		<button id="asteroids-toggle" class="minor-button">Asteroids</button>
+        <div id="footer-content">
+            ©2025 Julian
+        </div>
 	</footer>
 
-	<script src="main.js"></script>
-	<script src="asteroids.js"></script>
-	<script src="ml.js"></script>
-	<script src="draw.js"></script>
+	<script src="/js/main.js"></script>
 </html>

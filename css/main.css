@@ -1,39 +1,31 @@
 
-/* Theme Definition */
-:root {
-	--main-accent: #3AAFA9;
-	--secondary-accent: #2B7A78;
-	--dark: #17252A;
-	--light-main: #DEF2F1;
-	--text-dark: #111111;
-}
-
 
 body {
 	margin: 0px;
-	background-color: var(--light-main);
+	background-color: var(--dark);
+    min-height: 100vh;
+    position: relative;
 }
 
 html {
-	background-color: var(--light-main);
+	background-color: var(--dark);
 }
 
 .banner {
-	background-color: var(--main-accent);
 	font-family: "Montserrat" !important;
 	padding: 1rem;
 }
 .banner h1 {
 	font-weight: 800;
-	font-size: 4rem;
+	font-size: 3rem;
 	text-align: center;
 	color: white;
 	margin-bottom: 0;
 }
 .banner h2 {
 	text-align: center;
-	font-size: 2rem;
-	color: var(--text-dark);
+	font-size: 1.5rem;
+	color: var(--text-light);
 	margin-top: 1rem;
 }
 .banner ul {
@@ -45,7 +37,7 @@ html {
 .banner li {
 	padding-top: 1rem;
 	text-align: center;
-	color: var(--text-dark);
+	color: var(--text-light);
 	cursor: pointer;
 
 	padding-left: 1rem;
@@ -63,81 +55,10 @@ html {
 
 .section {
 	font-family: "Reddit Mono";
-	color: var(--text-dark);
+	color: var(--text-light);
 	padding: 2rem;
 	margin: auto;
-	width: 80vw;
-}
-
-.section-numbering {
-	color: gray;
-	font-family: "Reddit Mono";
-}
-
-footer {
-	display: flex;
-	background-color: var(--dark);
-	color: white;
-	padding: 2rem;
-	font-family: "Reddit Mono";
-	align-items: center;
-}
-
-footer img {
-	height: 2rem;
-	margin-left: 4rem;
-	margin-right: 0.4rem;
-	cursor: pointer;
-}
-
-#github-text {
-	cursor: pointer;
-	margin-right: 2rem;
-}
-
-#proficiency-table {
-	display: flex;
-}
-
-#proficiency-table ul {
-	list-style: none;
-	padding-left: 4rem;
-}
-
-.content-paragraph {
-	/*font-family: "Roboto";*/
-	padding-left: 4rem;
-	width: 60%;
-	margin-top: 3rem;
-	margin-bottom: 6rem;
-}
-
-.ordered-list {
-	padding-left: 4rem;
-	width: 60%;
-}
-
-.section h2, .section p {
-	padding-left: 4rem;
-}
-
-.section img {
-	width: 40%;
-	box-shadow: 5px 5px 10px 10px #00000045;
-	margin-left: 4rem;
-}
-
-.description-list {
-	padding-left: 1rem;
-}
-
-.description-list span {
-	font-weight: bold;
-}
-
-.img-row {
-	display: flex;
-	align-items: center;
+	width: 40vw;
 }
 
 
@@ -147,130 +68,6 @@ footer img {
 		display: none;
 	}
 
-	.section {
-		width: 100vw;
-		padding: 0px;
-	}
 
-	.content-paragraph {
-		padding: 2rem !important;
-		width: calc(100% - 4rem);
-		margin-bottom: 1rem !important;
-		padding-top: 1rem !important;
-	}
-
-	.section h1 {
-		text-align: center;
-	}
-
-	.section h2 {
-		text-align: center;
-		padding-left: 0px !important;
-	}
-
-	#pt-goal {
-		margin-top: 0 !important;
-		padding-bottom: 0px !important;
-	}
-
-	.section-numbering {
-		display: none;
-	}
-
-	.nn-container, #control-buttons {
-		display: none !important;
-	}
-	
-	#demo-notice {
-		display: block !important;
-		padding: 1rem;
-	}
-
-	.img-row {
-		flex-direction: column;
-		justify-content: center;
-	}
-
-	.img-row img {
-		width: 80%;
-		margin-left: 0px !important;
-		margin-bottom: 2rem;
-	}
-	#experience-heading {
-		padding-left: 0px !important;
-		text-align: center;
-	}
-	#proficiency-table {
-		justify-content: center;
-	}
-	#proficiency-table ul {
-		padding-left: 0px !important;
-		text-align: center;
-		margin-left: 1rem;
-		margin-right: 1rem;
-	}
-}
-
-
-
-
-/* Game stuff */
-#asteroid-player {
-	position: absolute;
-	display: none;
-}
-.bullet {
-	position: absolute;
-	color: red;
-}
-.asteroid {
-	position: absolute;
-	font-size: 8rem;
-}
-
-/* Machine learning stuff */
-
-#canvas {
-	background-color: white;
-	margin-right: 1rem;
-}
-
-#nn-table, #nn-table-labels {
-	display: flex;
-}
-
-.nn-out {
-	height: 2rem;
-	min-width: 2rem;
-	width: fit-content;
-	text-align: center;
-	padding: 0.2rem;
-}
-
-#nn-table .nn-out {
-	border: 1px solid black;
-}
-
-#nn-table-labels .nn-out {
-	border: 1px solid transparent;
-}
-
-.nn-container {
-	display: flex;
-	align-items: center;
-	margin-left: 4rem;
-}
-
-#control-buttons {
-	display: flex;
-	margin-left: 4rem;
-}
-
-#control-buttons button {
-	margin: 0.5rem;
-}
-
-#demo-notice {
-	display: none;
 }
 

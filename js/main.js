@@ -8,6 +8,7 @@ function openContactModal() {
 	setTimeout(() => {
 		modal.style.opacity = "1";
 	}, 100);
+
 }
 
 modal.addEventListener("click", (e) => {
