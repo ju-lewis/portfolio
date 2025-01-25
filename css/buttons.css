@@ -18,6 +18,12 @@
     border: 2px solid black;
 }
 
+@media screen and (max-width: 700px) {
+    #contact-button {
+        display: none;
+    }
+}
+
 #contact-button:hover {
     transform: translate(4px, 4px);
     box-shadow: none;

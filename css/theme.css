@@ -14,6 +14,10 @@
     --link-visited: #BE6EDF;
 }
 
+html {
+    font-size: 120%;
+}
+
 
 footer {
     font-family: "Montserrat";
@@ -46,6 +50,13 @@ footer #footer-content {
     
     border: 1px solid var(--text-light);
     border-radius: 0.5rem;
+}
+
+@media screen and (max-width: 700px) {
+    .main-content {
+        width: 90vw;
+        border: none;
+    }
 }
 
 
