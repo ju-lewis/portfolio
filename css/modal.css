@@ -16,8 +16,9 @@
     transform: translateY(20vh);
 
 	padding: 2rem;
-	background-color: var(--secondary-accent);
+	background-color: var(--text-dark);
 	color: white;
+    border: 1px solid var(--text-light);
 	border-radius: 1rem;
 	box-shadow: 5px 5px 20px 10px #00000084;
 }

@@ -56,6 +56,9 @@ footer #footer-content {
     .main-content {
         width: 90vw;
         border: none;
+
+        padding: 1rem;
+        padding-bottom: 5rem;
     }
 }
 
