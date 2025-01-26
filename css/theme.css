@@ -48,6 +48,7 @@ footer #footer-content {
     width: 40vw;
     margin: auto;
     padding: 1.5rem;
+    padding-top: 2rem;
 }
 
 @media screen and (max-width: 700px) {
