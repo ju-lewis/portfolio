@@ -2,72 +2,36 @@
 
 body {
 	margin: 0px;
-	background-color: var(--dark);
+	background-color: var(--dark-secondary);
     min-height: 100vh;
     position: relative;
 }
 
 html {
-	background-color: var(--dark);
+	background-color: var(--dark-secondary);
 }
 
 .banner {
 	font-family: "Montserrat" !important;
 	padding: 1rem;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
 }
 .banner h1 {
 	font-weight: 800;
 	font-size: 3rem;
-	text-align: center;
 	color: white;
 	margin-bottom: 0;
 }
 .banner h2 {
-	text-align: center;
 	font-size: 1.5rem;
 	color: var(--text-light);
 	margin-top: 1rem;
 }
-.banner ul {
-	list-style: none;
-	display: flex;
-	font-size: 1.2rem;
-	justify-content: center; 
-}
-.banner li {
-	padding-top: 1rem;
-	text-align: center;
-	color: var(--text-light);
-	cursor: pointer;
-
-	padding-left: 1rem;
-	padding-right: 1rem;
-}
-.banner li:hover {
-	text-decoration: underline;
+.banner img {
+    border-radius: 0.5rem;
 }
 
-.section h1 {
-	font-family: "Montserrat";
-	font-size: 3rem;
-	margin-bottom: 2rem;
-}
-
-.section {
-	font-family: "Reddit Mono";
-	color: var(--text-light);
-	padding: 2rem;
-	margin: auto;
-	width: 40vw;
-}
-
-
-/* Mobile Styles */
-@media screen and (max-width: 700px) {
-	.banner ul {
-		display: none;
-	}
-
-
-}
 

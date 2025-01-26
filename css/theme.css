@@ -4,7 +4,8 @@
 :root {
     --main-accent: #3AAFA9;
     --secondary-accent: #2B7A78;
-    --dark: #17252A;
+    --dark: #1E2E35;
+    --dark-secondary: #1A1F24;
     --light-main: #DEF2F1;
     --text-dark: #111111;
     --text-light: #EEEEEE;
@@ -47,9 +48,6 @@ footer #footer-content {
     width: 40vw;
     margin: auto;
     padding: 1.5rem;
-    
-    border: 1px solid var(--text-light);
-    border-radius: 0.5rem;
 }
 
 @media screen and (max-width: 700px) {
