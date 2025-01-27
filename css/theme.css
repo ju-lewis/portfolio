@@ -51,17 +51,6 @@ footer #footer-content {
     padding-top: 2rem;
 }
 
-@media screen and (max-width: 700px) {
-    .main-content {
-        width: 90vw;
-        border: none;
-
-        padding: 1rem;
-        padding-bottom: 5rem;
-    }
-}
-
-
 a:link {
     color: var(--link);
 }
@@ -71,3 +60,23 @@ a:hover {
 a:visited {
     color: var(--link-visited);
 }
+
+@media screen and (max-width: 1575px) {
+    .main-content {
+        width: 60vw;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    html {
+        font-size: 100%;
+    }
+    .main-content {
+        width: 90vw;
+        border: none;
+
+        padding: 1rem;
+        padding-bottom: 5rem;
+    }
+}
+

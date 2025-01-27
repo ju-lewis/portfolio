@@ -32,5 +32,20 @@ html {
 .banner img {
     border-radius: 0.5rem;
 }
-
+@media screen and (max-width: 900px) {
+    .banner {
+        align-items: center;
+    }
+    .banner h1 {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+    .banner h2 {
+        font-size: 1rem;
+    }
+    .banner img {
+        width: 130px !important;
+        height: 130px !important;
+    }
+}
 
