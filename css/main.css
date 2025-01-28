@@ -2,13 +2,8 @@
 
 body {
 	margin: 0px;
-	background-color: var(--dark-secondary);
     min-height: 100vh;
     position: relative;
-}
-
-html {
-	background-color: var(--dark-secondary);
 }
 
 .banner {

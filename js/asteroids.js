@@ -386,16 +386,40 @@ var player = new Player();
 var asteroids = [];
 
 var gameClock = null;
-document.getElementById("asteroids-toggle").addEventListener("click", toggleGame);
+
+const toggleButton = document.getElementById("asteroids-toggle");
+toggleButton.addEventListener("click", toggleGame);
 
 function toggleGame() {
+
 	if(!game.isRunning) {
+        // Game was paused when button was pressed
 		game.isRunning = true;
+
 		player.elem.style.display = "block";
+        asteroids.forEach((a) => {
+            a.elem.style.display = "block";
+        });
+        player.bullets.forEach((b) => {
+            b.elem.style.display = "block";
+        });
+
 		gameClock = setInterval(game.update, 33); 
+        toggleButton.innerText = "Pause Game";
 	} else {
+        // Game was already running
 		game.isRunning = false;
+
 		player.elem.style.display = "none";
+        asteroids.forEach((a) => {
+            a.elem.style.display = "none";
+        });
+        player.bullets.forEach((b) => {
+            b.elem.style.display = "none";
+        });
+
 		clearInterval(gameClock);
+        toggleButton.innerText = "Start Game";
 	}
 }
+

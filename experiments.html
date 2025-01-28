@@ -7,6 +7,8 @@
 
 		<link href="css/theme.css" rel="stylesheet">
         <link href="css/ml.css" rel="stylesheet">
+        <link href="css/experiments.css" rel="stylesheet">
+        <link href="css/buttons.css" rel="stylesheet">
         <link href="css/asteroids.css" rel="stylesheet">
 
 		<!-- Font Imports -->
@@ -21,66 +23,103 @@
         <link rel="manifest" href="site.webmanifest">
     </head>
     <body>
-		<h2>Handwritten Digit Classifier:</h2>
-		<p class="content-paragraph" style="margin-bottom: 2rem;">
-			This is a simple no-dependency pure JavaScript digit classifier I wrote as a small two day side project.
-			The neural network is a simple feed-forward network with no hidden layers and a softmax output. For training 
-			it uses cross-entropy loss and simple gradient descent, with Xavier initialised weights.
-			<br style="margin-bottom: 1rem;">
-			The maximum accuracy isn't fantastic as the model is incredibly simplistic, but it was a fun experiment to program 
-			a browser-native neural network.
-			<br style="margin-bottom: 1rem;">
-			When you click train it requests the MNIST dataset from the server and begins training on all digits from 0 to 9. 
-			You can draw in the white canvas and press 'Predict' to interact with the model!
-		</p>
+        <a 
+            href="index.html"
+            style="font-family: &quot;Nunito Sans&quot;;"
+        >
+            [Home]
+        </a>
 
-		<!-- Mobile demo disable notice -->
-		<h3 id="demo-notice">The interactive neural network demo is only available on desktop.</h3>
-		<div class="nn-container">
-			<canvas id="canvas" width="224" height="224"></canvas>
+        <div class="main-content">
 
-			<!-- Output Table -->
-			<div style="margin-left: 1rem;">
-				<div id="nn-table">
-					<div class="nn-out"></div>
-					<div class="nn-out"></div>
-					<div class="nn-out"></div>
-					<div class="nn-out"></div>
-					<div class="nn-out"></div>
-					<div class="nn-out"></div>
-					<div class="nn-out"></div>
-					<div class="nn-out"></div>
-					<div class="nn-out"></div>
-					<div class="nn-out"></div>
-				</div>
-				<div id="nn-table-labels">
-					<div class="nn-out">0</div>
-					<div class="nn-out">1</div>
-					<div class="nn-out">2</div>
-					<div class="nn-out">3</div>
-					<div class="nn-out">4</div>
-					<div class="nn-out">5</div>
-					<div class="nn-out">6</div>
-					<div class="nn-out">7</div>
-					<div class="nn-out">8</div>
-					<div class="nn-out">9</div>
-				</div>
+            <h1 id="page-title">Random Mini-Projects</h1>
 
-				<!-- Model stats -->
-				<div>
-					<div>Target Epochs: <input type="number" value="50" id="epoch-input"></div>
-					<div>Epochs Trained: <span id="epoch-label">0</span></div>
-					<div>Loss: <span id="loss-label">-</span></div>
-				</div>
-			</div>
+            <hr>
+            <section id="MNIST-Classifier">
+                <h1>Handwritten Digit Classifier:</h1>
+                <p>
+                    This is a simple no-dependency pure JavaScript MNIST digit classifier I wrote as a small two day side project.
+                    <ul style="list-style: square;">
+                        <li>Simple feed-forward architecture</li>
+                        <li>No hidden layers</li>
+                        <li>Softmax output</li>
+                        <li>Categorical cross entropy loss</li>
+                        <li>Simple gradient descent training</li>
+                    </ul>
+                </p>
+                <p>
+                    The maximum accuracy isn't fantastic as the model is incredibly simplistic, but it was a fun experiment to program 
+                    a browser-native neural network.
+                </p>
+                <p style="margin-bottom: 2rem;">
+                    When you press train, it requests the MNIST dataset from the server and begins training on all digits from 0 to 9. 
+                    You can draw in the white canvas and press 'Predict' to interact with the model!
+                </p>
+
+                <!-- Mobile demo disable notice -->
+                <h3 id="demo-notice">The interactive neural network demo is only available on desktop.</h3>
+                <div class="nn-container">
+                    <canvas id="canvas" width="224" height="224"></canvas>
+
+                    <!-- Output Table -->
+                    <div style="margin-left: 1rem;">
+                        <div id="nn-table">
+                            <div class="nn-out"></div>
+                            <div class="nn-out"></div>
+                            <div class="nn-out"></div>
+                            <div class="nn-out"></div>
+                            <div class="nn-out"></div>
+                            <div class="nn-out"></div>
+                            <div class="nn-out"></div>
+                            <div class="nn-out"></div>
+                            <div class="nn-out"></div>
+                            <div class="nn-out"></div>
+                        </div>
+                        <div id="nn-table-labels">
+                            <div class="nn-out">0</div>
+                            <div class="nn-out">1</div>
+                            <div class="nn-out">2</div>
+                            <div class="nn-out">3</div>
+                            <div class="nn-out">4</div>
+                            <div class="nn-out">5</div>
+                            <div class="nn-out">6</div>
+                            <div class="nn-out">7</div>
+                            <div class="nn-out">8</div>
+                            <div class="nn-out">9</div>
+                        </div>
+
+                        <!-- Model stats -->
+                        <div>
+                            <div>Target Epochs: <input type="number" value="50" id="epoch-input"></div>
+                            <div>Epochs Trained: <span id="epoch-label">0</span></div>
+                            <div>Loss: <span id="loss-label">-</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="control-buttons">
+                    <button onclick="clearCanvas()" style="margin-left: 0;">Clear Canvas</button>
+                    <button onclick="predictNum()">Predict</button>
+                    <button onclick="globalTrain()">Train</button>
+                </div>
+                <div id="asteroid-player"><h1 style="color: red;">🛸</h1></div>
+            </section>
+    
+            <hr>
+            
+            <section id="asteroids-game">
+                <h1>Asteroids-like Game (using HTML elements)</h1>
+                <div style="display: flex; gap: 2rem;">
+                    <button id="asteroids-toggle" class="minor-button">Start Game</button>
+                    <p>
+                        Move the character with <code>WASD</code> and shoot with <code>Enter</code>.
+                    </p>
+                </div>
+            </section>
+
+            <hr>
+
+
         </div>
-		<div id="control-buttons">
-			<button onclick="clearCanvas()">Clear Canvas</button>
-			<button onclick="predictNum()">Predict</button>
-			<button onclick="globalTrain()">Train</button>
-		</div>
-		<div id="asteroid-player"><h1 style="color: red;">🛸</h1></div>
-		<button id="asteroids-toggle" class="minor-button">Asteroids</button>
     </body>
 
     <!-- Script imports -->

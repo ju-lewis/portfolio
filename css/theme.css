@@ -11,14 +11,18 @@
     --text-light: #EEEEEE;
 
     --link: #CCCCCC;
-    --link-hover: #AAAAAA;
+    --link-hover: #999999;
     --link-visited: #BE6EDF;
 }
 
 html {
     font-size: 120%;
+	background-color: var(--dark-secondary);
 }
 
+body {
+	background-color: var(--dark-secondary);
+}
 
 footer {
     font-family: "Montserrat";
@@ -29,6 +33,12 @@ footer {
     padding-bottom: 1rem;
     bottom: 0;
 }
+
+#page-title {
+    font-family: "Montserrat" !important;
+    font-size: 3rem;
+}
+
 
 
 footer #footer-content {
@@ -58,7 +68,10 @@ a:hover {
     color: var(--link-hover);
 }
 a:visited {
-    color: var(--link-visited);
+    color: var(--link);
+}
+a:visited:hover {
+    color: var(--link-hover);
 }
 
 @media screen and (max-width: 1575px) {
@@ -70,6 +83,9 @@ a:visited {
 @media screen and (max-width: 900px) {
     html {
         font-size: 100%;
+    }
+    #page-title {
+        font-size: 1.5rem;
     }
     .main-content {
         width: 90vw;
