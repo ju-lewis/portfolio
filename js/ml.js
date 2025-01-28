@@ -139,7 +139,7 @@ class Model {
 			tableCells[i].innerHTML = Math.round(outputVec[i] * 100) / 100;
 		}
 		
-		tableCells[Model.pickGreatest(outputVec)].style.backgroundColor = "#00550088";
+		tableCells[Model.pickGreatest(outputVec)].style.backgroundColor = "#009900";
 	}
 
 
