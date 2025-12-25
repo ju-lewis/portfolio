@@ -9,26 +9,49 @@ body {
 .banner {
 	font-family: "Montserrat" !important;
     display: flex;
-    justify-content: space-between;
-    padding-bottom: 1rem;
-    gap: 1rem;
+    align-items: center;
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+    margin-bottom: 1rem;
+}
+.banner img {
+    border-radius: 0.5rem;
+    width: 12rem;
+    height: 12rem;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+.banner > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
 }
 .banner h1 {
 	font-weight: 800;
 	font-size: 3rem;
 	color: white;
-	margin-bottom: 0;
+	margin: 0;
+	padding: 0;
+	line-height: 1.2;
 }
 .banner h2 {
 	font-size: 1.5rem;
 	color: var(--text-light);
-	margin-top: 1rem;
+	margin: 0.5rem 0 0 0;
+	padding: 0;
+	line-height: 1.4;
+	font-weight: 400;
 }
-.banner img {
-    border-radius: 0.5rem;
-}
+
 @media screen and (max-width: 900px) {
     .banner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1rem;
+    }
+    .banner > div {
         align-items: center;
     }
     .banner h1 {
@@ -37,10 +60,40 @@ body {
     }
     .banner h2 {
         font-size: 1rem;
+        margin-top: 0.25rem;
     }
     .banner img {
-        width: 130px !important;
-        height: 130px !important;
+        width: 130px;
+        height: 130px;
     }
+}
+
+/* Main content spacing */
+.main-content p {
+    margin: 1rem 0;
+    line-height: 1.6;
+}
+
+.main-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-family: "Montserrat";
+    font-weight: 600;
+}
+
+.main-content hr {
+    margin: 2rem 0;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.main-content ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.main-content li {
+    margin: 0.5rem 0;
+    line-height: 1.6;
 }
 
