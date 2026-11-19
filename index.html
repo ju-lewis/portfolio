@@ -23,8 +23,6 @@
 			body {
 				font: 17px/1.5 "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
 				color: var(--fg);
-				background: radial-gradient(ellipse at top, #2a2a2a, #0b0b0b);
-				padding: 2.5vmin;
 				cursor: text;
 			}
 
@@ -32,12 +30,8 @@
 			.monitor {
 				position: relative; height: 100%;
 				padding: 32px 32px 64px;
-				border-radius: 26px;
 				background: linear-gradient(160deg, #ddd5c0, #b3ab95);
-				box-shadow:
-					inset 0 2px 2px rgba(255,255,255,.7),
-					inset 0 -6px 12px rgba(0,0,0,.25),
-					0 25px 60px rgba(0,0,0,.7);
+				box-shadow: inset 0 2px 2px rgba(255,255,255,.7), inset 0 -6px 12px rgba(0,0,0,.25);
 			}
 			.badge {
 				position: absolute; left: 40px; bottom: 20px;
@@ -61,7 +55,7 @@
 			.glass::before {
 				background:
 					radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,.65) 100%),
-					repeating-linear-gradient(to bottom, rgba(0,0,0,.35) 0 1px, transparent 1px 3px);
+					repeating-linear-gradient(to bottom, rgba(0,0,0,.22) 0 1px, transparent 1px 3px);
 			}
 			.glass::after {
 				height: 18%;
@@ -77,8 +71,8 @@
 			#screen::-webkit-scrollbar { display: none; }
 
 			@media (max-width: 600px) {
-				body { font-size: 14px; padding: 8px; }
-				.monitor { padding: 14px 14px 40px; border-radius: 16px; }
+				body { font-size: 14px; }
+				.monitor { padding: 14px 14px 40px; }
 				.badge { left: 20px; bottom: 12px; }
 				.led { right: 22px; bottom: 16px; }
 				#screen { padding: 12px; }
@@ -118,6 +112,42 @@
 				opacity: 0; border: 0; padding: 0; font-size: 16px; /* 16px stops iOS zoom-on-focus */
 			}
 
+			/* floating windows: late-90s GUI style. Sits above the scanlines so it stays crisp. */
+			#desk { position: absolute; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; }
+			.win {
+				--bevel-out: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px #808080, inset 2px 2px #fff;
+				--bevel-in: inset 1px 1px #808080, inset -1px -1px #fff, inset 2px 2px #0a0a0a, inset -2px -2px #dfdfdf;
+				position: absolute; pointer-events: auto; cursor: default;
+				width: min(440px, 90%); padding: 3px;
+				background: #c0c0c0; color: #000;
+				box-shadow: var(--bevel-out), 2px 2px 10px rgba(0,0,0,.5);
+				font: 13px/1.4 Tahoma, Verdana, "Segoe UI", Arial, sans-serif;
+			}
+			.win .bar {
+				display: flex; align-items: center; justify-content: space-between;
+				height: 22px; padding: 0 2px 0 6px;
+				background: linear-gradient(90deg, #000080, #1084d0); color: #fff;
+				font-weight: 700; cursor: grab; touch-action: none; user-select: none;
+			}
+			.win.inactive .bar { background: linear-gradient(90deg, #808080, #b5b5b5); color: #d4d0c8; }
+			.win .bar:active { cursor: grabbing; }
+			.win button, .win .btn {
+				background: #c0c0c0; color: #000; border: 0; box-shadow: var(--bevel-out);
+				font: inherit; cursor: pointer;
+			}
+			.win button:active, .win .btn:active { box-shadow: var(--bevel-in); }
+			.win .close { width: 18px; height: 16px; padding: 0 0 2px; font: 700 14px/1 Arial, sans-serif; }
+			.win .body { padding: 10px 8px 6px; }
+			.win .panel { background: #fff; box-shadow: var(--bevel-in); padding: 12px 14px; margin-bottom: 10px; }
+			.win .panel p { margin: 0 0 12px; }
+			.win dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px; margin: 0; }
+			.win dt { font-weight: 700; }
+			.win dd { margin: 0; }
+			.win a { color: #00e; }
+			.win a:hover { background: none; color: #00e; }
+			.win .actions { margin: 0; text-align: right; }
+			.win .btn { display: inline-block; min-width: 80px; padding: 4px 14px; text-align: center; text-decoration: none; }
+
 			@media (prefers-reduced-motion: reduce) {
 				.fastfetch img, #cur, .glass::after { animation: none; }
 			}
@@ -131,21 +161,49 @@
 					<main id="out" aria-live="polite"></main>
 					<div id="live" class="line" hidden><span id="ps"></span> <span id="before"></span><span id="cur"> </span><span id="after"></span><input id="in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Terminal input"></div>
 				</div>
+				<div id="desk"></div>
 			</div>
-			<span class="badge" aria-hidden="true">JL&middot;1984</span>
+			<span class="badge" aria-hidden="true">JL&middot;1998</span>
 			<span class="led" aria-hidden="true"></span>
 		</div>
 
 		<script>
-			const FS = {
-				projects: {
-					startbase: 'https://startbase.site',
-					lai: 'https://apps.apple.com/au/app/lai/id6751134068',
-					microqwen: 'https://github.com/ju-lewis/MicroQwen',
-					helium: 'https://github.com/ju-lewis/helium',
-					postrax: 'https://postrax.com.au/',
-					playground: 'experiments.html',
+			// Project windows. `desc` and `details` values are HTML; add/remove detail rows freely.
+			const PROJECTS = {
+				startbase: {
+					title: 'Startbase', url: 'https://startbase.site',
+					desc: 'A CRM and booking platform for small businesses.',
+					details: { Type: 'Web app', Stack: 'TODO', Status: 'TODO' },
 				},
+				lai: {
+					title: 'Lai', url: 'https://apps.apple.com/au/app/lai/id6751134068',
+					desc: 'A mobile app for saving social media posts to a map, so you can browse saved content by place.',
+					details: { Type: 'iOS app', Stack: 'TODO', Status: 'On the App Store' },
+				},
+				microqwen: {
+					title: 'MicroQwen', url: 'https://github.com/ju-lewis/MicroQwen',
+					desc: 'A simple inference engine for Qwen2.5 0.5B, written from scratch in C.',
+					details: { Type: 'Library / CLI', Stack: 'C', Status: 'TODO' },
+				},
+				helium: {
+					title: 'Helium', url: 'https://github.com/ju-lewis/helium',
+					desc: 'A small and simple HTTP server library.',
+					details: { Type: 'Library', Stack: 'Rust', Status: 'TODO' },
+				},
+				postrax: {
+					title: 'PosTrax', url: 'https://postrax.com.au/',
+					desc: 'Automatic scoring for yacht racing using a custom RTK GNSS system.',
+					details: { Type: 'Hardware + software', Stack: 'TODO', Status: 'TODO' },
+				},
+				playground: {
+					title: 'Playground', url: 'experiments.html',
+					desc: "A collection of small web-native projects I've worked on.",
+					details: { Type: 'Web experiments', Stack: 'HTML, CSS, JS' },
+				},
+			};
+
+			const FS = {
+				projects: Object.fromEntries(Object.entries(PROJECTS).map(([k, p]) => [k, p.url])),
 				contact: {
 					email: 'mailto:julianlewis2023@gmail.com',
 					github: 'https://github.com/ju-lewis',
@@ -194,14 +252,75 @@
 
 			const entry = (name, node) => typeof node === 'object'
 				? `<span><b>${esc(name)}/</b></span>`
-				: `<span><a href="${node}" target="_blank" rel="noopener">${esc(name)}</a></span>`;
+				: Object.hasOwn(PROJECTS, name)
+					? `<span><a href="${node}" data-win="${esc(name)}">${esc(name)}</a></span>`
+					: `<span><a href="${node}" target="_blank" rel="noopener">${esc(name)}</a></span>`;
+
+			// Floating, draggable project windows.
+			const desk = document.getElementById('desk');
+			let topZ = 0, opened = 0;
+
+			function openWin(name) {
+				let w = document.getElementById('win-' + name);
+				if (!w) {
+					const p = PROJECTS[name];
+					w = document.createElement('section');
+					w.className = 'win';
+					w.id = 'win-' + name;
+					w.setAttribute('role', 'dialog');
+					w.setAttribute('aria-label', p.title);
+					w.innerHTML =
+						`<div class="bar"><span class="title">${esc(p.title)}</span><button class="close" aria-label="Close ${esc(p.title)}">&times;</button></div>` +
+						`<div class="body"><div class="panel"><p>${p.desc}</p><dl>` +
+						Object.entries(p.details).map(([k, v]) => `<dt>${k}:</dt><dd>${v}</dd>`).join('') +
+						`</dl></div><p class="actions"><a class="btn" href="${p.url}" target="_blank" rel="noopener">Open</a></p></div>`;
+					w.querySelector('.close').onclick = () => w.remove();
+					w.addEventListener('pointerdown', () => focusWin(w));
+					draggable(w);
+					desk.append(w);
+					const off = 40 + (opened++ % 6) * 28;
+					place(w, desk.clientWidth / 2 - w.offsetWidth / 2 + off - 110, off);
+				}
+				focusWin(w);
+			}
+
+			function focusWin(w) {
+				w.style.zIndex = ++topZ;
+				for (const x of desk.children) x.classList.toggle('inactive', x !== w);
+			}
+
+			// Keep at least the title bar grabbable on screen.
+			function place(w, x, y) {
+				const minVis = 60;
+				w.style.left = Math.min(Math.max(x, minVis - w.offsetWidth), desk.clientWidth - minVis) + 'px';
+				w.style.top = Math.min(Math.max(y, 0), desk.clientHeight - 30) + 'px';
+			}
+
+			function draggable(w) {
+				const bar = w.querySelector('.bar');
+				bar.addEventListener('pointerdown', e => {
+					if (e.target.closest('button')) return;
+					e.preventDefault();
+					bar.setPointerCapture(e.pointerId);
+					const dx = e.clientX - w.offsetLeft, dy = e.clientY - w.offsetTop;
+					const move = e => place(w, e.clientX - dx, e.clientY - dy);
+					const stop = () => {
+						bar.removeEventListener('pointermove', move);
+						bar.removeEventListener('pointerup', stop);
+						bar.removeEventListener('pointercancel', stop);
+					};
+					bar.addEventListener('pointermove', move);
+					bar.addEventListener('pointerup', stop);
+					bar.addEventListener('pointercancel', stop);
+				});
+			}
 
 			const commands = {
 				help() {
 					print(
 						`ju.lewis: the personal site of Julian Lewis. Look around with the commands below.\n\n` +
 						`<span class="cmd">help</span><span class="dim">show this message</span>\n` +
-						`<span class="cmd">ls [dir]</span><span class="dim">list directory contents (files are links)</span>\n` +
+						`<span class="cmd">ls [dir]</span><span class="dim">list directory contents (click files to open)</span>\n` +
 						`<span class="cmd">cd [dir]</span><span class="dim">change directory</span>\n` +
 						`<span class="cmd">fastfetch</span><span class="dim">show system (well, my) info</span>\n` +
 						`<span class="cmd">clear</span><span class="dim">clear the screen (or Ctrl+L)</span>\n\n` +
@@ -334,12 +453,15 @@
 
 			// Click anywhere to focus the prompt, unless selecting text or clicking a link.
 			document.addEventListener('click', e => {
-				if (!live.hidden && !e.target.closest('a') && !getSelection().toString()) input.focus();
+				const win = e.target.closest('[data-win]');
+				if (win) { e.preventDefault(); return openWin(win.dataset.win); }
+				if (!live.hidden && !e.target.closest('a, .win') && !getSelection().toString()) input.focus();
 			});
 
 			(async () => {
 				await autoType('fastfetch');
 				await autoType('help');
+                await autoType('ls');
 				live.hidden = false;
 				render();
 				input.focus();
