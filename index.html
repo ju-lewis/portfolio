@@ -118,14 +118,15 @@
 				--bevel-out: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px #808080, inset 2px 2px #fff;
 				--bevel-in: inset 1px 1px #808080, inset -1px -1px #fff, inset 2px 2px #0a0a0a, inset -2px -2px #dfdfdf;
 				position: absolute; pointer-events: auto; cursor: default;
-				width: min(440px, 90%); padding: 3px;
+				display: flex; flex-direction: column;
+				width: min(820px, 94%); height: min(660px, calc(100% - 40px)); padding: 3px;
 				background: #c0c0c0; color: #000;
 				box-shadow: var(--bevel-out), 2px 2px 10px rgba(0,0,0,.5);
-				font: 13px/1.4 Tahoma, Verdana, "Segoe UI", Arial, sans-serif;
+				font: 14px/1.5 Tahoma, Verdana, "Segoe UI", Arial, sans-serif;
 			}
 			.win .bar {
 				display: flex; align-items: center; justify-content: space-between;
-				height: 22px; padding: 0 2px 0 6px;
+				flex: none; height: 24px; padding: 0 3px 0 6px;
 				background: linear-gradient(90deg, #000080, #1084d0); color: #fff;
 				font-weight: 700; cursor: grab; touch-action: none; user-select: none;
 			}
@@ -137,16 +138,37 @@
 			}
 			.win button:active, .win .btn:active { box-shadow: var(--bevel-in); }
 			.win .close { width: 18px; height: 16px; padding: 0 0 2px; font: 700 14px/1 Arial, sans-serif; }
-			.win .body { padding: 10px 8px 6px; }
-			.win .panel { background: #fff; box-shadow: var(--bevel-in); padding: 12px 14px; margin-bottom: 10px; }
-			.win .panel p { margin: 0 0 12px; }
-			.win dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px; margin: 0; }
+			.win .body { flex: 1; overflow-y: auto; padding: 12px 12px 4px; scrollbar-color: #a0a0a0 #dfdfdf; }
+			.win .head { display: flex; align-items: center; gap: 14px; margin: 0 2px 14px; }
+			.win .logo {
+				flex: none; width: 64px; height: 64px; object-fit: contain;
+				background: #fff; box-shadow: var(--bevel-in); padding: 4px;
+				display: grid; place-items: center; font: 700 32px Georgia, serif; color: #000080;
+			}
+			.win h2 { margin: 0; font-size: 22px; }
+			.win .tagline { margin: 2px 0 0; color: #333; }
+			.win fieldset {
+				margin: 0 0 14px; padding: 8px 14px 12px;
+				border: 1px solid #808080; box-shadow: 1px 1px #fff, inset 1px 1px #fff;
+			}
+			.win legend { padding: 0 4px; font-weight: 700; }
+			.win fieldset p { margin: 0 0 10px; }
+			.win fieldset p:last-child { margin: 0; }
+			.win dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 20px; margin: 0; }
 			.win dt { font-weight: 700; }
 			.win dd { margin: 0; }
+			.win .photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+			.win figure { margin: 0; }
+			.win figure img {
+				display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: top;
+				background: #fff; box-shadow: var(--bevel-in); padding: 2px;
+			}
+			.win figcaption { margin-top: 4px; font-size: 12px; text-align: center; }
 			.win a { color: #00e; }
 			.win a:hover { background: none; color: #00e; }
-			.win .actions { margin: 0; text-align: right; }
-			.win .btn { display: inline-block; min-width: 80px; padding: 4px 14px; text-align: center; text-decoration: none; }
+			.win .status { flex: none; display: flex; gap: 2px; margin-top: 2px; font-size: 12px; }
+			.win .status span { box-shadow: inset 1px 1px #808080, inset -1px -1px #fff; padding: 1px 6px; }
+			.win .status span:first-child { flex: 1; }
 
 			@media (prefers-reduced-motion: reduce) {
 				.fastfetch img, #cur, .glass::after { animation: none; }
@@ -168,37 +190,60 @@
 		</div>
 
 		<script>
-			// Project windows. `desc` and `details` values are HTML; add/remove detail rows freely.
+			// Project windows. Strings are HTML. `logo` is an image path (null shows the first letter);
+			// `photos` is a list of { src, caption }; an empty list hides the Photos section.
 			const PROJECTS = {
 				startbase: {
-					title: 'Startbase', url: 'https://startbase.site',
-					desc: 'A CRM and booking platform for small businesses.',
-					details: { Type: 'Web app', Stack: 'TODO', Status: 'TODO' },
+					title: 'Startbase', url: 'https://startbase.site', logo: null,
+					tagline: 'CRM and booking platform for small businesses.',
+					overview: `<p>Startbase gives small businesses one place to run the day-to-day: bookings, reminders,
+						Google reviews and ad campaigns, with an overview dashboard showing how the business is tracking.</p>
+						<p>TODO: why you built it, who uses it, what you learned.</p>`,
+					details: { Role: 'TODO', Type: 'Web app', Stack: 'TODO', Status: 'TODO', Year: '2024' },
+					photos: [
+						{ src: 'imgs/startbase1.png', caption: 'Overview dashboard' },
+						{ src: 'imgs/startbase2.png', caption: 'TODO caption' },
+					],
 				},
 				lai: {
-					title: 'Lai', url: 'https://apps.apple.com/au/app/lai/id6751134068',
-					desc: 'A mobile app for saving social media posts to a map, so you can browse saved content by place.',
-					details: { Type: 'iOS app', Stack: 'TODO', Status: 'On the App Store' },
+					title: 'Lai', url: 'https://apps.apple.com/au/app/lai/id6751134068', logo: null,
+					tagline: 'Save social media posts to a map.',
+					overview: `<p>Lai saves posts from social media onto a map, so you can browse saved content by place
+						instead of scrolling through an endless list.</p>
+						<p>TODO: more detail.</p>`,
+					details: { Role: 'TODO', Type: 'iOS app', Stack: 'TODO', Status: 'On the App Store' },
+					photos: [],
 				},
 				microqwen: {
-					title: 'MicroQwen', url: 'https://github.com/ju-lewis/MicroQwen',
-					desc: 'A simple inference engine for Qwen2.5 0.5B, written from scratch in C.',
-					details: { Type: 'Library / CLI', Stack: 'C', Status: 'TODO' },
+					title: 'MicroQwen', url: 'https://github.com/ju-lewis/MicroQwen', logo: null,
+					tagline: 'Qwen2.5 0.5B inference, from scratch in C.',
+					overview: `<p>A simple inference engine for the Qwen2.5 0.5B language model, written from scratch in C.</p>
+						<p>TODO: more detail.</p>`,
+					details: { Type: 'Inference engine', Stack: 'C', Status: 'TODO' },
+					photos: [],
 				},
 				helium: {
-					title: 'Helium', url: 'https://github.com/ju-lewis/helium',
-					desc: 'A small and simple HTTP server library.',
+					title: 'Helium', url: 'https://github.com/ju-lewis/helium', logo: null,
+					tagline: 'A small HTTP server library in Rust.',
+					overview: `<p>A small and simple HTTP server library written in Rust.</p>
+						<p>TODO: more detail.</p>`,
 					details: { Type: 'Library', Stack: 'Rust', Status: 'TODO' },
+					photos: [],
 				},
 				postrax: {
-					title: 'PosTrax', url: 'https://postrax.com.au/',
-					desc: 'Automatic scoring for yacht racing using a custom RTK GNSS system.',
-					details: { Type: 'Hardware + software', Stack: 'TODO', Status: 'TODO' },
+					title: 'PosTrax', url: 'https://postrax.com.au/', logo: null,
+					tagline: 'Automatic scoring for yacht racing.',
+					overview: `<p>PosTrax automatically scores yacht races using a custom RTK GNSS system.</p>
+						<p>TODO: more detail.</p>`,
+					details: { Role: 'TODO', Type: 'Hardware + software', Stack: 'RTK GNSS, TODO', Status: 'TODO' },
+					photos: [],
 				},
 				playground: {
-					title: 'Playground', url: 'experiments.html',
-					desc: "A collection of small web-native projects I've worked on.",
+					title: 'Playground', url: 'experiments.html', logo: null,
+					tagline: 'Small web-native experiments.',
+					overview: `<p>A collection of small web-native projects I've worked on.</p>`,
 					details: { Type: 'Web experiments', Stack: 'HTML, CSS, JS' },
+					photos: [],
 				},
 			};
 
@@ -269,17 +314,24 @@
 					w.id = 'win-' + name;
 					w.setAttribute('role', 'dialog');
 					w.setAttribute('aria-label', p.title);
+					const host = new URL(p.url, location.href).host || p.url;
 					w.innerHTML =
 						`<div class="bar"><span class="title">${esc(p.title)}</span><button class="close" aria-label="Close ${esc(p.title)}">&times;</button></div>` +
-						`<div class="body"><div class="panel"><p>${p.desc}</p><dl>` +
-						Object.entries(p.details).map(([k, v]) => `<dt>${k}:</dt><dd>${v}</dd>`).join('') +
-						`</dl></div><p class="actions"><a class="btn" href="${p.url}" target="_blank" rel="noopener">Open</a></p></div>`;
+						`<div class="body">` +
+						`<header class="head">${p.logo ? `<img class="logo" src="${p.logo}" alt="">` : `<div class="logo" aria-hidden="true">${esc(p.title[0])}</div>`}` +
+						`<div><h2>${esc(p.title)}</h2><p class="tagline">${p.tagline}</p></div></header>` +
+						`<fieldset><legend>Overview</legend>${p.overview}</fieldset>` +
+						`<fieldset><legend>Details</legend><dl>${Object.entries(p.details).map(([k, v]) => `<dt>${k}:</dt><dd>${v}</dd>`).join('')}</dl></fieldset>` +
+						(p.photos.length ? `<fieldset><legend>Photos</legend><div class="photos">${p.photos.map(ph =>
+							`<figure><a href="${ph.src}" target="_blank" rel="noopener"><img src="${ph.src}" alt="${esc(ph.caption)}" loading="lazy"></a><figcaption>${ph.caption}</figcaption></figure>`).join('')}</div></fieldset>` : '') +
+						`</div>` +
+						`<div class="status"><span>&#128279; <a href="${p.url}" target="_blank" rel="noopener">${esc(host)}</a></span><span>${esc(p.details.Type || '')}</span></div>`;
 					w.querySelector('.close').onclick = () => w.remove();
 					w.addEventListener('pointerdown', () => focusWin(w));
 					draggable(w);
 					desk.append(w);
-					const off = 40 + (opened++ % 6) * 28;
-					place(w, desk.clientWidth / 2 - w.offsetWidth / 2 + off - 110, off);
+					const off = (opened++ % 6) * 24;
+					place(w, (desk.clientWidth - w.offsetWidth) / 2 + off - 60, 20 + off);
 				}
 				focusWin(w);
 			}
@@ -324,7 +376,7 @@
 						`<span class="cmd">cd [dir]</span><span class="dim">change directory</span>\n` +
 						`<span class="cmd">fastfetch</span><span class="dim">show system (well, my) info</span>\n` +
 						`<span class="cmd">clear</span><span class="dim">clear the screen (or Ctrl+L)</span>\n\n` +
-						`<span class="dim">Tab completes commands and paths. Up/Down cycles history.</span>`,
+						`<span class="dim">Underlined items are clickable. Tab completes, Up/Down cycles history.</span>`,
 						'line help'
 					);
 				},
@@ -461,6 +513,7 @@
 			(async () => {
 				await autoType('fastfetch');
 				await autoType('help');
+                await autoType('cd projects');
                 await autoType('ls');
 				live.hidden = false;
 				render();
