@@ -5,91 +5,243 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>ju.lewis</title>
 
-        <!-- Style imports -->
-		<link href="css/main.css" rel="stylesheet">
-        <link href="css/theme.css" rel="stylesheet">
-		<link href="css/buttons.css" rel="stylesheet">
-		<link href="css/modal.css" rel="stylesheet">
-
 		<!-- Font Imports -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		
-        <!-- Favicon Stuff -->
-        <link rel="apple-touch-icon" sizes="180x180" href="imgs/pfp-apple-touch.jpg">
-        <link rel="icon" type="image/png" sizes="32x32" href="imgs/pfp-32x32.jpg">
-        <link rel="icon" type="image/png" sizes="16x16" href="imgs/pfp-16x16.jpg">
-        <link rel="manifest" href="/site.webmanifest">
+		<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
+		<!-- Favicon Stuff -->
+		<link rel="apple-touch-icon" sizes="180x180" href="imgs/pfp-apple-touch.jpg">
+		<link rel="icon" type="image/png" sizes="32x32" href="imgs/pfp-32x32.jpg">
+		<link rel="icon" type="image/png" sizes="16x16" href="imgs/pfp-16x16.jpg">
+		<link rel="manifest" href="/site.webmanifest">
+
+		<style>
+			:root { --fg: #e6e6e6; --dim: #7a7a7a; --bg: #000; }
+			* { box-sizing: border-box; }
+			html, body { margin: 0; background: var(--bg); color: var(--fg); }
+			body {
+				font: 15px/1.5 "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+				min-height: 100vh;
+				padding: 16px 20px;
+				cursor: text;
+			}
+			::selection { background: var(--fg); color: var(--bg); }
+			a { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
+			a:hover { background: var(--fg); color: var(--bg); }
+			b { font-weight: 700; color: #fff; }
+			.dim { color: var(--dim); }
+			.line { white-space: pre-wrap; word-break: break-all; min-height: 1.5em; }
+
+			/* neofetch */
+			.neofetch { display: flex; flex-wrap: wrap; gap: 3ch; margin: .5em 0 1em; align-items: flex-start; }
+			.neofetch img {
+				width: 300px; max-width: 100%;
+				border: 1px solid var(--fg);
+				animation: scan .9s steps(14) both;
+			}
+			@keyframes scan { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
+			.blocks span { display: inline-block; width: 3ch; height: 1.2em; }
+
+			/* ls */
+			.ls span { margin-right: 3ch; }
+
+			/* help */
+			.help { margin-bottom: 1em; }
+			.help .cmd { display: inline-block; width: 14ch; }
+
+			/* live prompt */
+			#live { position: relative; }
+			#cur { animation: blink 1s steps(1) infinite; outline: 1px solid var(--fg); outline-offset: -1px; }
+			body:focus-within #cur { background: var(--fg); color: var(--bg); }
+			@keyframes blink { 50% { background: transparent; color: var(--fg); outline-color: transparent; } }
+			#in {
+				position: absolute; left: 0; top: 0; width: 1px; height: 1px;
+				opacity: 0; border: 0; padding: 0; font-size: 16px; /* 16px stops iOS zoom-on-focus */
+			}
+
+			@media (prefers-reduced-motion: reduce) {
+				.neofetch img, #cur { animation: none; }
+			}
+		</style>
 	</head>
 
 	<body>
-		
-        <!-- Main content -->
-        <div class="main-content">
+		<main id="out" aria-live="polite"></main>
+		<div id="live" class="line" hidden><span id="ps"></span> <span id="before"></span><span id="cur"> </span><span id="after"></span><input id="in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Terminal input"></div>
 
-		    <!-- Banner -->
-		    <div class="banner">
-                <img src="imgs/new-car.jpg" alt="Julian Lewis">
-                <div>
-		    	    <h1>Julian Lewis</h1>
-		    	    <h2>Software dev <br> Motorsports Electrical Engineer</h2>
-                </div>
-		    </div>
+		<script>
+			const FS = {
+				projects: {
+					startbase: 'https://startbase.site',
+					lai: 'https://apps.apple.com/au/app/lai/id6751134068',
+					microqwen: 'https://github.com/ju-lewis/MicroQwen',
+					helium: 'https://github.com/ju-lewis/helium',
+					postrax: 'https://postrax.com.au/',
+					playground: 'experiments.html',
+				},
+				contact: {
+					email: 'mailto:julianlewis2023@gmail.com',
+					github: 'https://github.com/ju-lewis',
+				},
+			};
 
+			const out = document.getElementById('out');
+			const live = document.getElementById('live');
+			const input = document.getElementById('in');
+			const $ = id => document.getElementById(id);
+			const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+			const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
+			const esc = s => s.replace(/[&<>"']/g, c => `&#${c.charCodeAt(0)};`);
+			const scroll = () => window.scrollTo(0, document.body.scrollHeight);
 
-            <p>
-                Hey, welcome to my site :)
-            </p>
-            <p>
-                I'm a software developer and recent computer science graduate in Melbourne. I'm currently working on several projects, 
-                including a CRM and booking platform <a href="https://startbase.site">[Startbase]</a> and a mobile app for saving social media posts
-                to a map, enabling intuitive browsing of saved content <a href="https://apps.apple.com/au/app/lai/id6751134068">[Lai]</a>. 
-            </p>
-            <hr>
+			let cwd = [];
+			const history = [];
+			let hIdx = 0;
 
-            <!-- links?? -->
-            <div style="display: flex; justify-content: space-evenly;">
-            </div>
+			const ps = () => `<b>julian@ju.lewis</b>:<b>~${esc(cwd.map(p => '/' + p).join(''))}</b>$`;
 
+			function print(html, cls = 'line') {
+				const el = document.createElement('div');
+				el.className = cls;
+				el.innerHTML = html;
+				out.append(el);
+				scroll();
+				return el;
+			}
 
-            <h2>Projects</h2>
-            <ul style="list-style: square;">
-                <li>
-                    <a href="https://startbase.site">[Startbase]</a> - A business management software project.
-                </li>
-                <li>
-                    <a href="https://github.com/ju-lewis/MicroQwen">[MicroQwen]</a> - A simplistic inference engine for Qwen2.5 0.5B written from scratch in C
-                </li>
-                <li>
-                    <a href="https://github.com/ju-lewis/helium">[Helium]</a> - A small and simple HTTP server library in Rust.
-                </li>
-                <li>
-                    <a href="https://postrax.com.au/">[PosTrax]</a> - Automatic scoring for yacht racing using a custom RTK GNSS system. 
-                </li>
-                <li>
-                    <a href="experiments.html">[Playground]</a> - A collection of small web-native projects I've worked on.
-                </li>
-            </ul>
-            <p>See what I'm working on currently on <a href="https://github.com/ju-lewis">[Github]</a></p>
+			// Resolve a path against cwd. Returns [parts, node]; node is undefined if missing.
+			function resolve(path) {
+				const parts = /^[~/]/.test(path) ? [] : [...cwd];
+				for (const p of path.replace(/^~/, '').split('/')) {
+					if (!p || p === '.') continue;
+					if (p === '..') parts.pop(); else parts.push(p);
+				}
+				let node = FS;
+				for (const p of parts) {
+					if (typeof node !== 'object' || !Object.hasOwn(node, p)) return [parts, undefined];
+					node = node[p];
+				}
+				return [parts, node];
+			}
 
-            <hr>
+			const entry = (name, node) => typeof node === 'object'
+				? `<span><b>${esc(name)}/</b></span>`
+				: `<span><a href="${node}" target="_blank" rel="noopener">${esc(name)}</a></span>`;
 
-            <h2>Contact Me</h2>
-            <ul style="list-style: none;">
-                <li>[Email: <a href="mailto:julianlewis2023@gmail.com">julianlewis2023@gmail.com</a>]</li>
-                <!-- <li>[Discord: theonlybool]</li> -->
-            </ul>
-        </div>
+			const commands = {
+				help() {
+					print(
+						`ju.lewis: the personal site of Julian Lewis. Look around with the commands below.\n\n` +
+						`<span class="cmd">help</span><span class="dim">show this message</span>\n` +
+						`<span class="cmd">ls [dir]</span><span class="dim">list directory contents (files are links)</span>\n` +
+						`<span class="cmd">cd [dir]</span><span class="dim">change directory</span>`,
+						'line help'
+					);
+				},
+				ls(path = '.') {
+					const [, node] = resolve(path);
+					if (node === undefined) return print(`ls: cannot access '${esc(path)}': No such file or directory`);
+					if (typeof node !== 'object') return print(entry(path, node), 'line ls');
+					print(Object.entries(node).map(([k, v]) => entry(k, v)).join(''), 'line ls');
+				},
+				cd(path = '~') {
+					const [parts, node] = resolve(path);
+					if (node === undefined) return print(`cd: no such file or directory: ${esc(path)}`);
+					if (typeof node !== 'object') return print(`cd: not a directory: ${esc(path)}`);
+					cwd = parts;
+				},
+				clear() { out.innerHTML = ''; },
+				async neofetch() {
+					const info = [
+						`<b>julian</b>@<b>ju.lewis</b>`,
+						'─'.repeat(15),
+						['Name', 'Julian Lewis'],
+						['Role', 'Founder, CTO @ Idiom'],
+						['Location', 'Melbourne, AU'],
+						['Education', 'Computer Science graduate'],
+						['Also', 'Motorsports electrical engineer'],
+						['Projects', 'Startbase, Lai, PosTrax, MicroQwen'],
+						['GitHub', '<a href="https://github.com/ju-lewis" target="_blank" rel="noopener">ju-lewis</a>'],
+						['Email', '<a href="mailto:julianlewis2023@gmail.com">julianlewis2023@gmail.com</a>'],
+						['Shell', 'jlsh 1.0'],
+						'',
+						`<span class="blocks">${['#111', '#222', '#444', '#666', '#888', '#aaa', '#ccc', '#fff']
+							.map(c => `<span style="background:${c}"></span>`).join('')}</span>`,
+					];
+					const box = print('<img src="imgs/new-car.jpg" alt="Julian Lewis"><div class="info"></div>', 'neofetch');
+					const col = box.querySelector('.info');
+					for (const l of info) {
+						await sleep(70);
+						const d = document.createElement('div');
+						d.className = 'line';
+						d.innerHTML = Array.isArray(l) ? `<b>${l[0]}</b>: ${l[1]}` : l;
+						col.append(d);
+						scroll();
+					}
+				},
+			};
+
+			async function run(line) {
+				const [cmd, ...args] = line.trim().split(/\s+/);
+				if (!cmd) return;
+				if (!Object.hasOwn(commands, cmd)) return print(`${esc(cmd)}: command not found. Try 'help'.`);
+				await commands[cmd](...args);
+			}
+
+			// Type a command into a fake prompt, then run it (intro only).
+			async function autoType(cmd) {
+				const el = print(`${ps()} <span></span>`);
+				const span = el.querySelector('span:last-child');
+				await sleep(400);
+				for (const c of cmd) { span.textContent += c; await sleep(70); }
+				await sleep(250);
+				await run(cmd);
+			}
+
+			function render() {
+				const v = input.value, i = input.selectionStart ?? v.length;
+				$('ps').innerHTML = ps();
+				$('before').textContent = v.slice(0, i);
+				$('cur').textContent = v[i] || ' ';
+				$('after').textContent = v.slice(i + 1);
+				scroll();
+			}
+
+			input.addEventListener('input', render);
+			input.addEventListener('keyup', render);
+			input.addEventListener('keydown', async e => {
+				if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+					e.preventDefault();
+					hIdx = Math.max(0, Math.min(history.length, hIdx + (e.key === 'ArrowUp' ? -1 : 1)));
+					input.value = history[hIdx] ?? '';
+					return render();
+				}
+				if (e.key === 'l' && e.ctrlKey) { e.preventDefault(); return commands.clear(); }
+				if (e.key !== 'Enter') return;
+				const line = input.value;
+				input.value = '';
+				print(`${ps()} ${esc(line)}`);
+				if (line.trim()) hIdx = history.push(line);
+				live.hidden = true;
+				await run(line);
+				live.hidden = false;
+				render();
+				input.focus();
+			});
+
+			// Click anywhere to focus the prompt, unless selecting text or clicking a link.
+			document.addEventListener('click', e => {
+				if (!live.hidden && !e.target.closest('a') && !getSelection().toString()) input.focus();
+			});
+
+			(async () => {
+				await autoType('neofetch');
+				await autoType('help');
+				live.hidden = false;
+				render();
+				input.focus();
+			})();
+		</script>
 	</body>
-
-    <!--
-	<footer>
-        <div id="footer-content">
-            ©2025 Julian
-        </div>
-	</footer>
-    -->
-
-	<script src="js/main.js"></script>
 </html>
