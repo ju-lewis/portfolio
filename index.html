@@ -17,11 +17,11 @@
 		<link rel="manifest" href="/site.webmanifest">
 
 		<style>
-			:root { --fg: #e6e6e6; --dim: #7a7a7a; --bg: #000; }
+			:root { --fg: #e6e6e6; --dim: #7a7a7a; --bg: #000; --accent: #7aa6da; }
 			* { box-sizing: border-box; }
 			html, body { margin: 0; background: var(--bg); color: var(--fg); }
 			body {
-				font: 15px/1.5 "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+				font: 17px/1.5 "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
 				min-height: 100vh;
 				padding: 16px 20px;
 				cursor: text;
@@ -33,14 +33,15 @@
 			.dim { color: var(--dim); }
 			.line { white-space: pre-wrap; word-break: break-all; min-height: 1.5em; }
 
-			/* neofetch */
-			.neofetch { display: flex; flex-wrap: wrap; gap: 3ch; margin: .5em 0 1em; align-items: flex-start; }
-			.neofetch img {
+			/* fastfetch */
+			.fastfetch { display: flex; flex-wrap: wrap; gap: 3ch; margin: .5em 0 1em; align-items: flex-start; }
+			.fastfetch img {
 				width: 300px; max-width: 100%;
 				border: 1px solid var(--fg);
-				animation: scan .9s steps(14) both;
+				animation: scan .35s steps(8) both;
 			}
 			@keyframes scan { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
+			.fastfetch .k { color: var(--accent); font-weight: 700; }
 			.blocks span { display: inline-block; width: 3ch; height: 1.2em; }
 
 			/* ls */
@@ -61,7 +62,7 @@
 			}
 
 			@media (prefers-reduced-motion: reduce) {
-				.neofetch img, #cur { animation: none; }
+				.fastfetch img, #cur { animation: none; }
 			}
 		</style>
 	</head>
@@ -135,7 +136,10 @@
 						`ju.lewis: the personal site of Julian Lewis. Look around with the commands below.\n\n` +
 						`<span class="cmd">help</span><span class="dim">show this message</span>\n` +
 						`<span class="cmd">ls [dir]</span><span class="dim">list directory contents (files are links)</span>\n` +
-						`<span class="cmd">cd [dir]</span><span class="dim">change directory</span>`,
+						`<span class="cmd">cd [dir]</span><span class="dim">change directory</span>\n` +
+						`<span class="cmd">fastfetch</span><span class="dim">show system (well, my) info</span>\n` +
+						`<span class="cmd">clear</span><span class="dim">clear the screen (or Ctrl+L)</span>\n\n` +
+						`<span class="dim">Tab completes commands and paths. Up/Down cycles history.</span>`,
 						'line help'
 					);
 				},
@@ -152,30 +156,32 @@
 					cwd = parts;
 				},
 				clear() { out.innerHTML = ''; },
-				async neofetch() {
+				async fastfetch() {
 					const info = [
-						`<b>julian</b>@<b>ju.lewis</b>`,
+						`<span class="k">julian</span>@<span class="k">ju.lewis</span>`,
 						'─'.repeat(15),
 						['Name', 'Julian Lewis'],
 						['Role', 'Founder, CTO @ Idiom'],
 						['Location', 'Melbourne, AU'],
 						['Education', 'Computer Science graduate'],
 						['Also', 'Motorsports electrical engineer'],
-						['Projects', 'Startbase, Lai, PosTrax, MicroQwen'],
+						['Projects', 'Idiom, Lai, PosTrax, MicroQwen'],
 						['GitHub', '<a href="https://github.com/ju-lewis" target="_blank" rel="noopener">ju-lewis</a>'],
 						['Email', '<a href="mailto:julianlewis2023@gmail.com">julianlewis2023@gmail.com</a>'],
 						['Shell', 'jlsh 1.0'],
 						'',
-						`<span class="blocks">${['#111', '#222', '#444', '#666', '#888', '#aaa', '#ccc', '#fff']
-							.map(c => `<span style="background:${c}"></span>`).join('')}</span>`,
+						// Tomorrow Night ANSI palette: normal row, then bright row.
+						...[['#1d1f21', '#cc6666', '#b5bd68', '#f0c674', '#81a2be', '#b294bb', '#8abeb7', '#c5c8c6'],
+							['#666666', '#d54e53', '#b9ca4a', '#e7c547', '#7aa6da', '#c397d8', '#70c0b1', '#eaeaea']]
+							.map(row => `<span class="blocks">${row.map(c => `<span style="background:${c}"></span>`).join('')}</span>`),
 					];
-					const box = print('<img src="imgs/new-car.jpg" alt="Julian Lewis"><div class="info"></div>', 'neofetch');
+					const box = print('<img src="imgs/new-car.jpg" alt="Julian Lewis"><div class="info"></div>', 'fastfetch');
 					const col = box.querySelector('.info');
 					for (const l of info) {
-						await sleep(70);
+						await sleep(30);
 						const d = document.createElement('div');
 						d.className = 'line';
-						d.innerHTML = Array.isArray(l) ? `<b>${l[0]}</b>: ${l[1]}` : l;
+						d.innerHTML = Array.isArray(l) ? `<span class="k">${l[0]}</span>: ${l[1]}` : l;
 						col.append(d);
 						scroll();
 					}
@@ -199,6 +205,35 @@
 				await run(cmd);
 			}
 
+			// Bash-style tab completion: commands for the first word, FS paths after.
+			function complete() {
+				const v = input.value;
+				const i = v.lastIndexOf(' ') + 1;
+				const word = v.slice(i);
+				let base = '', opts;
+				if (!v.slice(0, i).trim()) {
+					opts = Object.keys(commands).filter(c => c.startsWith(word)).map(c => c + ' ');
+				} else {
+					base = word.slice(0, word.lastIndexOf('/') + 1);
+					const [, node] = resolve(base || '.');
+					if (typeof node !== 'object') return;
+					opts = Object.entries(node)
+						.filter(([k]) => k.startsWith(word.slice(base.length)))
+						.map(([k, n]) => base + k + (typeof n === 'object' ? '/' : ' '));
+				}
+				if (!opts.length) return;
+				let common = opts[0];
+				for (const o of opts) while (!o.startsWith(common)) common = common.slice(0, -1);
+				if (common.length > word.length) {
+					input.value = v.slice(0, i) + common;
+					return render();
+				}
+				// Ambiguous: list the options like bash does, keep the line.
+				print(`${ps()} ${esc(v)}`);
+				print(opts.map(o => `<span>${esc(o.slice(base.length).trim())}</span>`).join(''), 'line ls');
+				render();
+			}
+
 			function render() {
 				const v = input.value, i = input.selectionStart ?? v.length;
 				$('ps').innerHTML = ps();
@@ -217,6 +252,7 @@
 					input.value = history[hIdx] ?? '';
 					return render();
 				}
+				if (e.key === 'Tab') { e.preventDefault(); return complete(); }
 				if (e.key === 'l' && e.ctrlKey) { e.preventDefault(); return commands.clear(); }
 				if (e.key !== 'Enter') return;
 				const line = input.value;
@@ -236,7 +272,7 @@
 			});
 
 			(async () => {
-				await autoType('neofetch');
+				await autoType('fastfetch');
 				await autoType('help');
 				live.hidden = false;
 				render();
