@@ -163,6 +163,7 @@
 				display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: top;
 				background: #fff; box-shadow: var(--bevel-in); padding: 2px;
 			}
+			.win .photos.tall img { aspect-ratio: auto; }
 			.win figcaption { margin-top: 4px; font-size: 12px; text-align: center; }
 			.win a { color: #00e; }
 			.win a:hover { background: none; color: #00e; }
@@ -192,6 +193,7 @@
 		<script>
 			// Project windows. Strings are HTML. `logo` is an image path (null shows the first letter);
 			// `photos` is a list of { src, caption }; an empty list hides the Photos section.
+			// `tallPhotos: true` shows photos uncropped (for portrait screenshots).
 			const PROJECTS = {
 				startbase: {
 					title: 'Startbase', url: 'https://startbase.site', logo: null,
@@ -206,13 +208,18 @@
 					],
 				},
 				lai: {
-					title: 'Lai', url: 'https://apps.apple.com/au/app/lai/id6751134068', logo: null,
+					title: 'Lai', url: 'https://apps.apple.com/au/app/lai/id6751134068', logo: 'imgs/lai-logo.webp',
 					tagline: 'Save social media posts to a map.',
 					overview: `<p>Lai saves posts from social media onto a map, so you can browse saved content by place
 						instead of scrolling through an endless list.</p>
-						<p>TODO: more detail.</p>`,
-					details: { Role: 'TODO', Type: 'iOS app', Stack: 'TODO', Status: 'On the App Store' },
-					photos: [],
+						<p>Lai pulls metadata from links (information from a webpage link, social media post information APIs, etc.) 
+                        to form an estimate for the location (e.g. a particular cafe or tourist destination) depicted in a post.</p>`,
+					details: { Role: 'Backend lead', Type: 'Mobile app', Stack: 'React Native frontend, Bun (Typescript) backend, AWS EC2 hosting, MariaDB', Status: 'Released, service discountinued' },
+					tallPhotos: true,
+					photos: [
+						{ src: 'imgs/lai1.webp', caption: 'Share a post to Lai' },
+						{ src: 'imgs/lai2.webp', caption: 'Saved posts pinned to a map, with filters' },
+					],
 				},
 				microqwen: {
 					title: 'MicroQwen', url: 'https://github.com/ju-lewis/MicroQwen', logo: null,
@@ -322,7 +329,7 @@
 						`<div><h2>${esc(p.title)}</h2><p class="tagline">${p.tagline}</p></div></header>` +
 						`<fieldset><legend>Overview</legend>${p.overview}</fieldset>` +
 						`<fieldset><legend>Details</legend><dl>${Object.entries(p.details).map(([k, v]) => `<dt>${k}:</dt><dd>${v}</dd>`).join('')}</dl></fieldset>` +
-						(p.photos.length ? `<fieldset><legend>Photos</legend><div class="photos">${p.photos.map(ph =>
+						(p.photos.length ? `<fieldset><legend>Photos</legend><div class="photos${p.tallPhotos ? ' tall' : ''}">${p.photos.map(ph =>
 							`<figure><a href="${ph.src}" target="_blank" rel="noopener"><img src="${ph.src}" alt="${esc(ph.caption)}" loading="lazy"></a><figcaption>${ph.caption}</figcaption></figure>`).join('')}</div></fieldset>` : '') +
 						`</div>` +
 						`<div class="status"><span>&#128279; <a href="${p.url}" target="_blank" rel="noopener">${esc(host)}</a></span><span>${esc(p.details.Type || '')}</span></div>`;
@@ -400,9 +407,9 @@
 						['Name', 'Julian Lewis'],
 						['Role', 'Founder, CTO @ Idiom'],
 						['Location', 'Melbourne, AU'],
-						['Education', 'Computer Science graduate'],
-						['Also', 'Motorsports electrical engineer'],
-						['Projects', 'Idiom, Lai, PosTrax, MicroQwen'],
+						['Education', 'BSci - Comp sci major'],
+						['Also', 'Ex-FSAE Electrical Engineer'],
+						['Projects', 'ILY by Idiom, Lai, PosTrax, MicroQwen, other assorted stuff :)'],
 						['GitHub', '<a href="https://github.com/ju-lewis" target="_blank" rel="noopener">ju-lewis</a>'],
 						['Email', '<a href="mailto:julianlewis2023@gmail.com">julianlewis2023@gmail.com</a>'],
 						['Shell', 'jlsh 1.0'],
