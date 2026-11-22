@@ -197,13 +197,17 @@
 				ilybyidiom: {
 					title: 'ILY by Idiom', url: 'https://idiom.technology', logo: 'imgs/ily-logo.png',
 					tagline: 'The personal alarm re-imagined.',
-					overview: `<p>ILY Pendant is a simple, screen-free personal alarm that helps older people live safely and
-						independently, with 24/7 family monitoring and nothing to set up.</p>
-						<p>Pressing and holding the button starts an emergency call. If a fall is detected, ILY alerts up to five
-						family contacts and shares the wearer's GPS location. It has a pre-installed SIM on Telstra's 4G network,
-						four to five days of battery life and IP67 waterproofing.</p>
-						<p>The ILY Dock, coming soon, adds a voice companion that checks in on your loved one and gives reminders.</p>`,
-					details: { Role: 'Founder, CTO', Type: 'Hardware + software', Stack: 'TODO', Status: 'Pre-orders open' },
+                    overview: `<p>ILY is a modern re-imagining of a personal alarm, designed to support independent living 
+                        for older Australians living in isolation at home.</p>
+
+                        <p>ILY takes form in two parts, a smart-speaker charging dock and a personal alarm pendant (which acts as a remote 
+                        for the dock). The pendant provides a layer of physical safety, allowing the wearer to quickly call their emergency
+                        contacts when they need help, as well as providing a familiar method to interact with the dock. </p>
+
+                        <p>The ILY dock is a voice assistant designed from the ground up as a care companion and support tool. 
+                        It enables easy communication to friends and family, scheduling and communicating the completion of reminders, and 
+                        other daily activities like asking questions, listening to audiobooks, and more.</p>`,
+					details: { Role: 'Co-founder, CTO', Type: 'Hardware + Mobile app + Internal web tools', Stack: 'FreeRTOS (C++), Rust (Axum framework), React Native (typescript)', Status: 'Pre-orders open', Year: '2026-ongoing' },
 					photos: [
 						{ src: 'imgs/ily1.webp', caption: 'ILY Pendant and Dock' },
 						{ src: 'imgs/ily2.webp', caption: 'Worn on the wrist' },
@@ -282,7 +286,8 @@
 			const input = document.getElementById('in');
 			const $ = id => document.getElementById(id);
 			const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-			const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
+			let skip = false; // set by Tab/Space during the intro
+			const sleep = ms => new Promise(r => setTimeout(r, reduce || skip ? 0 : ms));
 			const esc = s => s.replace(/[&<>"']/g, c => `&#${c.charCodeAt(0)};`);
 			const screen = document.getElementById('screen');
 			const scroll = () => { screen.scrollTop = screen.scrollHeight; };
@@ -532,11 +537,17 @@
 				if (!live.hidden && !e.target.closest('a, .win') && !getSelection().toString()) input.focus();
 			});
 
+			const skipIntro = e => {
+				if (e.key === 'Tab' || e.key === ' ') { e.preventDefault(); skip = true; }
+			};
+			document.addEventListener('keydown', skipIntro);
+
 			(async () => {
 				await autoType('fastfetch');
 				await autoType('help');
                 await autoType('cd projects');
                 await autoType('ls');
+				document.removeEventListener('keydown', skipIntro);
 				live.hidden = false;
 				render();
 				input.focus();
